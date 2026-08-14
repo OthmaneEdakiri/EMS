@@ -1,0 +1,110 @@
+{
+  "header": {
+    "profile": "الملف الشخصي",
+    "teamSettings": "إعدادات الفريق",
+    "logout": "تسجيل الخروج"
+  },
+  "footer": {
+    "copyright": "\u00a9 {year} EMS. جميع الحقوق محفوظة."
+  },
+  "navbar": {
+    "invoices": "الفواتير",
+    "customers": "العملاء",
+    "products-services": "المنتجات / الخدمات",
+    "create-invoices": "إنشاء فاتورة"
+  },
+  "auth": {
+    "login": {
+      "title": "مرحبًا بعودتك",
+      "description": "أدخل بريدك الإلكتروني لتسجيل الدخول إلى حسابك",
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "example@email.com"
+      },
+      "password": {
+        "label": "كلمة المرور",
+        "placeholder": "أدخل كلمة المرور"
+      },
+      "submit": "تسجيل الدخول",
+      "authPrompt": {
+        "message": "ليس لديك حساب؟ ",
+        "signUpLinkText": "إنشاء حساب"
+      },
+      "toast": {
+        "success": "تم تسجيل الدخول بنجاح"
+      },
+      "validation": {
+        "emailRequired": "البريد الإلكتروني مطلوب",
+        "emailInvalid": "يرجى إدخال بريد إلكتروني صالح",
+        "passwordRequired": "كلمة المرور مطلوبة",
+        "passwordMinLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل"
+      }
+    },
+    "signup": {
+      "title": "إنشاء حساب",
+      "description": "أدخل معلوماتك للبدء",
+      "name": {
+        "label": "الاسم",
+        "placeholder": "محمد أحمد"
+      },
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "example@email.com"
+      },
+      "password": {
+        "label": "كلمة المرور",
+        "placeholder": "أدخل كلمة المرور"
+      },
+      "confirmPassword": {
+        "label": "تأكيد كلمة المرور",
+        "placeholder": "أعد إدخال كلمة المرور"
+      },
+      "submit": "إنشاء حساب",
+      "companyDetails": "بيانات الشركة",
+      "companyName": {
+        "label": "اسم الشركة",
+        "placeholder": "شركتك المحدودة"
+      },
+      "currency": {
+        "label": "العملة",
+        "placeholder": "MAD"
+      },
+      "invoicePrefix": {
+        "label": "بادئة الفاتورة",
+        "placeholder": "INV"
+      },
+      "language": {
+        "label": "اللغة",
+        "placeholder": "اختر اللغة",
+        "options": {
+          "en": "English",
+          "ar": "العربية"
+        }
+      },
+      "toast": {
+        "success": "تم إنشاء الحساب بنجاح"
+      },
+      "validation": {
+        "nameRequired": "الاسم مطلوب",
+        "nameMinLength": "يجب أن يتكون الاسم من حرفين على الأقل",
+        "emailRequired": "البريد الإلكتروني مطلوب",
+        "emailInvalid": "يرجى إدخال بريد إلكتروني صالح",
+        "passwordRequired": "كلمة المرور مطلوبة",
+        "passwordMinLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+        "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+        "confirmPasswordMismatch": "كلمتا المرور غير متطابقتين",
+        "companyNameRequired": "اسم الشركة مطلوب",
+        "companyNameMinLength": "يجب أن يتكون اسم الشركة من 3 أحرف على الأقل",
+        "currencyRequired": "العملة مطلوبة",
+        "currencyMaxLength": "يجب ألا يتجاوز رمز العملة 8 أحرف",
+        "prefixRequired": "البادئة مطلوبة",
+        "prefixMaxLength": "يجب ألا تتجاوز البادئة 20 حرفًا",
+        "languageRequired": "يرجى اختيار اللغة"
+      },
+      "authPrompt": {
+        "message": "لديك حساب بالفعل؟ ",
+        "loginLinkText": "تسجيل الدخول"
+      }
+    }
+  }
+}

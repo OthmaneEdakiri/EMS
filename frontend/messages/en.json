@@ -1,0 +1,110 @@
+{
+  "header": {
+    "profile": "Profile",
+    "teamSettings": "Team Settings",
+    "logout": "Logout"
+  },
+  "footer": {
+    "copyright": "\u00a9 {year} EMS. All rights reserved."
+  },
+  "navbar": {
+    "invoices": "Invoices",
+    "customers": "Customers",
+    "products-services": "Products / Services",
+    "create-invoices": "Create invoices"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "description": "Enter your email below to login to your account",
+      "email": {
+        "label": "Email",
+        "placeholder": "m@example.com"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "submit": "Login",
+      "authPrompt": {
+        "message": "Don't have an account? ",
+        "signUpLinkText": "Sign Up"
+      },
+      "toast": {
+        "success": "Logged in successfully"
+      },
+      "validation": {
+        "emailRequired": "Email is required",
+        "emailInvalid": "Please enter a valid email",
+        "passwordRequired": "Password is required",
+        "passwordMinLength": "Password must be at least 8 characters"
+      }
+    },
+    "signup": {
+      "title": "Create an account",
+      "description": "Enter your information to get started",
+      "name": {
+        "label": "Name",
+        "placeholder": "John Doe"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "m@example.com"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "confirmPassword": {
+        "label": "Confirm Password",
+        "placeholder": "Re-enter your password"
+      },
+      "submit": "Register",
+      "companyDetails": "Company Details",
+      "companyName": {
+        "label": "Company Name",
+        "placeholder": "Your Company Ltd."
+      },
+      "currency": {
+        "label": "Currency",
+        "placeholder": "MAD"
+      },
+      "invoicePrefix": {
+        "label": "Invoice Prefix",
+        "placeholder": "INV"
+      },
+      "language": {
+        "label": "Language",
+        "placeholder": "Select a language",
+        "options": {
+          "en": "English",
+          "ar": "العربية"
+        }
+      },
+      "toast": {
+        "success": "Account created successfully"
+      },
+      "validation": {
+        "nameRequired": "Name is required",
+        "nameMinLength": "Name must be at least 2 characters",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Please enter a valid email",
+        "passwordRequired": "Password is required",
+        "passwordMinLength": "Password must be at least 8 characters",
+        "confirmPasswordRequired": "Please confirm your password",
+        "confirmPasswordMismatch": "Passwords do not match",
+        "companyNameRequired": "Company name is required",
+        "companyNameMinLength": "Company name must be at least 3 characters",
+        "currencyRequired": "Currency is required",
+        "currencyMaxLength": "Currency must be at most 8 characters",
+        "prefixRequired": "Prefix is required",
+        "prefixMaxLength": "Prefix must be at most 20 characters",
+        "languageRequired": "Please select a language"
+      },
+      "authPrompt": {
+        "message": "Already have an account? ",
+        "loginLinkText": "Login"
+      }
+    }
+  }
+}
