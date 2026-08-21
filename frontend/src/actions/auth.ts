@@ -1,92 +1,109 @@
-// app/actions/loginAction.ts
 "use server";
 
-import axios from "axios";
+import { createAxiosServer } from "@/lib/axios";
+import { redirect } from "@/i18n/navigation";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
-
-type LoginResult =
-  | { success: true }
-  | { success: false; message: string };
-
-export async function loginAction(
-  _prevState: unknown,
-  formData: FormData
-): Promise<LoginResult> {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-
-  const cookieStore = await cookies();
-
+export const loginAction = async (
+  credentials: Record<"email" | "password", string> | undefined,
+) => {
   try {
-    // ============================================
-    // الخطوة 1: طلب /sanctum/csrf-cookie أولًا
-    // ============================================
-    const csrfResponse = await axios.get(`${BACKEND_URL}/sanctum/csrf-cookie`, {
-      withCredentials: true,
-    });
+    const token = (await cookies()).get("access_token")?.value;
+    const axiosServer = await createAxiosServer(token);
 
-    // نحفظ الكوكيز اللي رجعت (XSRF-TOKEN + laravel_session) في متصفح المستخدم
-    const csrfSetCookies = csrfResponse.headers["set-cookie"];
-    saveCookiesFromLaravel(csrfSetCookies, cookieStore);
+    const response = await axiosServer.post("/login", credentials);
+    if (response.status === 200) {
+      (await cookies()).set("access_token", response.data.data.token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+      });
 
-    // نقرأ XSRF-TOKEN اللي حفظناه للتو لنستخدمه في طلب اللوجن
-    const xsrfToken = cookieStore.get("XSRF-TOKEN")?.value;
-    const sessionCookie = cookieStore.get("laravel_session")?.value;
+      const tenantLocale = response.data.data.tenant_locale;
 
-    // ============================================
-    // الخطوة 2: إرسال طلب Login مع إرفاق الكوكيز يدويًا
-    // ============================================
-    const loginResponse = await axios.post(
-      `${BACKEND_URL}/login`,
-      { email, password },
-      {
-        withCredentials: true,
-        headers: {
-          Accept: "application/json",
-          "X-XSRF-TOKEN": decodeURIComponent(xsrfToken || ""),
-          Cookie: `XSRF-TOKEN=${xsrfToken}; laravel_session=${sessionCookie}`,
-        },
-      }
-    );
-
-    // نحفظ الكوكيز الجديدة بعد نجاح تسجيل الدخول (Session ID محدّث)
-    const loginSetCookies = loginResponse.headers["set-cookie"];
-    saveCookiesFromLaravel(loginSetCookies, cookieStore);
-
-    return { success: true };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const message =
-        error.response?.data?.message || "بيانات الدخول غير صحيحة";
-      return { success: false, message };
+      return {
+        status: 200,
+        message: "Login successful",
+        tenantLocale,
+      };
     }
-    return { success: false, message: "حدث خطأ غير متوقع" };
+  } catch (err: any) {
+    if (err.status === 422) {
+      return {
+        status: 422,
+        message: err.response.data.message,
+        errors: err.response.data.errors,
+      };
+    }
+    return {
+      status: 500,
+      message: "An unexpected server error occurred.",
+      err,
+    };
   }
-}
+};
 
-// ------------------------------------------------
-// دالة مساعدة لحفظ الكوكيز القادمة من Laravel
-// في كوكيز Next.js (حتى تصل لمتصفح المستخدم)
-// ------------------------------------------------
-function saveCookiesFromLaravel(
-  setCookieHeaders: string[] | undefined,
-  cookieStore: Awaited<ReturnType<typeof cookies>>
-) {
-  if (!setCookieHeaders) return;
+export const logoutAction = async () => {
+  try {
+    const token = (await cookies()).get("access_token")?.value;
+    const axiosServer = await createAxiosServer(token);
 
-  for (const rawCookie of setCookieHeaders) {
-    const parts = rawCookie.split(";");
-    const [name, ...valParts] = parts[0].split("=");
-    const value = valParts.join("=");
+    const response = await axiosServer.post("/logout");
 
-    cookieStore.set(name.trim(), value, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-    });
+    if (response.status === 204) {
+      (await cookies()).delete("access_token");
+
+      return {
+        status: 204,
+      };
+    }
+
+    return {
+      status: 500,
+      message: "An unexpected error occurred",
+    };
+  } catch (error: any) {
+    return {
+      status: 500,
+      message: error.response?.data?.message || "An unexpected error occurredz",
+    };
   }
-}
+};
+
+export const signupAction = async (values: Record<string, string>) => {
+  try {
+    const token = (await cookies()).get("access_token")?.value;
+    const axiosServer = await createAxiosServer(token);
+    const response = await axiosServer.post("/register", values);
+    console.log("Signup response:", response.data); // Log the entire response data for debugging
+    if (response.status === 201) {
+      return {
+        status: 201,
+        message: "Signup successful",
+        tenantLocale: response.data.data.tenant_locale,
+      };
+    }
+    return {
+      status: response.status || 500,
+      message: "Unexpected response from the server.",
+    };
+  } catch (error: any) {
+    const status = error.response?.status || 500;
+    const data = error.response?.data;
+    if (status === 422) {
+      return {
+        status,
+        message: data?.message || "Validation failed.",
+        errors: data?.errors || {},
+      };
+    }
+    return {
+      status,
+      message:
+        data?.message ||
+        error.message ||
+        "An unexpected server error occurred.",
+    };
+  }
+};

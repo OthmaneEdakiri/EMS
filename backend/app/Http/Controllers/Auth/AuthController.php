@@ -15,7 +15,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        $user = $request->user();
+        $user = $request->user()->load('tenant');
 
         $token = $user->createToken('api')->plainTextToken;
 
@@ -26,6 +26,7 @@ class AuthController extends Controller
                 'email' => $user->email,
                 'role' => $user->role,
             ],
+            'tenant_locale' => $user->tenant->locale,
             'must_change_password' => $user->must_change_password,
             'token' => $token
         ]);

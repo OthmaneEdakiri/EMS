@@ -1,7 +1,8 @@
-import createMiddleware from 'next-intl/middleware';
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { routing } from './i18n/routing';
+import createMiddleware from "next-intl/middleware";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { routing } from "./i18n/routing";
+import { createAxiosServer } from "./lib/axios";
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -14,7 +15,11 @@ export default async function middleware(request: NextRequest) {
     return intlResponse;
   }
 
-  const locale = pathname.split('/')[1] || routing.defaultLocale;
+  const rawLocale = pathname.split("/")[1];
+  const locale =
+    rawLocale && routing.locales.includes(rawLocale as any)
+      ? rawLocale
+      : routing.defaultLocale;
 
   const isPublicPath =
     pathname === `/${locale}/login` ||
@@ -22,17 +27,23 @@ export default async function middleware(request: NextRequest) {
     pathname === `/${locale}/login/` ||
     pathname === `/${locale}/signup/`;
 
-  const cookieHeader = request.headers.get('cookie') ?? '';
   let isAuthenticated = false;
 
-  if (cookieHeader) {
+  const token = request.cookies.get("access_token")?.value;
+
+  if (token) {
     try {
-      const res = await fetch('http://localhost:8000/api/v1/user', {
-        headers: { cookie: cookieHeader },
-      });
-      isAuthenticated = res.ok;
-      const user = await res.json()
-      console.log(user)
+      const axiosServer = await createAxiosServer(token);
+      const res = await axiosServer.get("/user");
+      isAuthenticated = res.status === 200;
+
+      if (isAuthenticated) {
+        const tenantLocale = res.data.tenant_locale;
+        if (locale !== tenantLocale) {
+          const newPathname = pathname.replace(`/${locale}`, `/${tenantLocale}`);
+          return NextResponse.redirect(new URL(newPathname, request.url));
+        }
+      }
     } catch {
       isAuthenticated = false;
     }
@@ -40,10 +51,7 @@ export default async function middleware(request: NextRequest) {
 
   if (!isAuthenticated && !isPublicPath) {
     const loginUrl = new URL(`/${locale}/login`, request.url);
-    const nextPath = pathname;
-    if (nextPath !== `/${locale}/login` && nextPath !== `/${locale}/signup`) {
-      loginUrl.searchParams.set('next', nextPath);
-    }
+    loginUrl.searchParams.set("next", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
@@ -55,5 +63,5 @@ export default async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };

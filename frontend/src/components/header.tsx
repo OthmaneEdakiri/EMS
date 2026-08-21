@@ -2,7 +2,7 @@
 
 import { Link, usePathname, useRouter } from "@/i18n/navigation"
 import { useTransition } from "react"
-import { useLocale, useTranslations } from "next-intl"
+import { useTranslations } from "next-intl"
 import {
   Receipt,
   Plus,
@@ -22,17 +22,11 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
-import { logoutAction, updateLocaleAction } from "@/actions/auth"
-
-const locales = [
-  { code: 'en', label: 'English' },
-  { code: 'ar', label: 'العربية' },
-]
+import { logoutAction } from "@/actions/auth"
 
 export function Header() {
   const pathname = usePathname()
   const router = useRouter()
-  const locale = useLocale()
   const [isPending, startTransition] = useTransition()
   const tNav = useTranslations('navbar');
   const tHeader = useTranslations('header');
@@ -48,13 +42,6 @@ export function Header() {
     startTransition(async () => {
       await logoutAction()
       router.push("/login")
-    })
-  }
-
-  const handleLocaleChange = (newLocale: string) => {
-    startTransition(async () => {
-      await updateLocaleAction(newLocale)
-      router.replace(pathname, { locale: newLocale })
     })
   }
 
@@ -112,23 +99,6 @@ export function Header() {
                   <Settings className="size-4" />
                   {tHeader('teamSettings')}
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                {locales.map((loc) => (
-                  <DropdownMenuItem
-                    key={loc.code}
-                    onClick={() => handleLocaleChange(loc.code)}
-                    disabled={isPending || loc.code === locale}
-                    className={cn(
-                      loc.code === locale && "bg-accent font-medium"
-                    )}
-                  >
-                    <Languages className="size-4" />
-                    {loc.label}
-                    {loc.code === locale && (
-                      <span className="ml-auto text-xs text-muted-foreground">✓</span>
-                    )}
-                  </DropdownMenuItem>
-                ))}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={handleLogout}

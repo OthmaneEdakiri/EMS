@@ -12,6 +12,9 @@ Route::prefix('api/v1')->group(function () {
     require __DIR__ . '/auth.php';
 
     Route::middleware(['auth:sanctum', 'password.changed'])->get('/user', function (Request $request) {
-        return $request->user()->load('tenant:id,locale,currency,currency_decimal_places,name');
+        return [
+            'user' => $request->user(),
+            'tenant_locale' => $request->user()->tenant->locale,
+        ];
     });
 });
