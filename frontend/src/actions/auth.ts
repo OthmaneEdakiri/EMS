@@ -107,3 +107,77 @@ export const signupAction = async (values: Record<string, string>) => {
     };
   }
 };
+
+export const passwordChangeAction = async (values: Record<string, string>) => {
+  try {
+    const token = (await cookies()).get("access_token")?.value;
+    const axiosServer = await createAxiosServer(token);
+    const response = await axiosServer.post("/password/change", values);
+    if (response.status === 200) {
+      return {
+        status: 200,
+        message: "Password changed successfully",
+      };
+    }
+  } catch (error: any) {
+    const status = error.response?.status || 500;
+    const data = error.response?.data;
+    if (status === 422) {
+      return {
+        status,
+        message: data?.message || "Validation failed.",
+        errors: data?.errors || {},
+      };
+    }
+    return {
+      status,
+      message:
+        data?.message ||
+        error.message ||
+        "An unexpected server error occurred.",
+    };
+  }
+};
+
+export const getProfileAction = async () => {
+  try {
+    const token = (await cookies()).get("access_token")?.value;
+    const axiosServer = await createAxiosServer(token);
+    const response = await axiosServer.get("/user");
+    return response.data;
+  } catch {
+    return null;
+  }
+};
+
+export const updateProfileAction = async (values: Record<string, string>) => {
+  try {
+    const token = (await cookies()).get("access_token")?.value;
+    const axiosServer = await createAxiosServer(token);
+    const response = await axiosServer.put("/profile", values);
+    if (response.status === 200) {
+      return {
+        status: 200,
+        message: "Profile updated successfully",
+        data: response.data.data,
+      };
+    }
+  } catch (error: any) {
+    const status = error.response?.status || 500;
+    const data = error.response?.data;
+    if (status === 422) {
+      return {
+        status,
+        message: data?.message || "Validation failed.",
+        errors: data?.errors || {},
+      };
+    }
+    return {
+      status,
+      message:
+        data?.message ||
+        error.message ||
+        "An unexpected server error occurred.",
+    };
+  }
+};
