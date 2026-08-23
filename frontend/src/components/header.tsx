@@ -23,6 +23,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 import { logoutAction } from "@/actions/auth"
+import { useUserContext } from "@/contexts/user-context"
 
 export function Header() {
   const pathname = usePathname()
@@ -30,6 +31,7 @@ export function Header() {
   const [isPending, startTransition] = useTransition()
   const tNav = useTranslations('navbar');
   const tHeader = useTranslations('header');
+  const { user } = useUserContext()
 
   const navItems = [
   { href: "/invoices", label: tNav("invoices") },
@@ -84,7 +86,11 @@ export function Header() {
                   "size-8 rounded-full p-0",
                 )}
               >
-                <UserCircle className="size-5" />
+                {user?.name ? (
+                  <span className="text-sm font-medium">{user.name.charAt(0).toUpperCase()}</span>
+                ) : (
+                  <UserCircle className="size-5" />
+                )}
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem

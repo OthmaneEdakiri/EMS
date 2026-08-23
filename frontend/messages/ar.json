@@ -106,5 +106,55 @@
         "loginLinkText": "تسجيل الدخول"
       }
     }
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "description": "إدارة معلوماتك الشخصية وإعدادات الأمان",
+    "personalInfo": {
+      "title": "المعلومات الشخصية",
+      "name": {
+        "label": "الاسم",
+        "placeholder": "اسمك الكامل"
+      },
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "your@email.com"
+      },
+      "role": {
+        "label": "الدور"
+      }
+    },
+    "changePassword": {
+      "title": "تغيير كلمة المرور",
+      "currentPassword": {
+        "label": "كلمة المرور الحالية",
+        "placeholder": "أدخل كلمة المرور الحالية"
+      },
+      "newPassword": {
+        "label": "كلمة المرور الجديدة",
+        "placeholder": "أدخل كلمة المرور الجديدة"
+      },
+      "confirmPassword": {
+        "label": "تأكيد كلمة المرور الجديدة",
+        "placeholder": "أعد إدخال كلمة المرور الجديدة"
+      }
+    },
+    "save": "حفظ التغييرات",
+    "updatePassword": "تحديث كلمة المرور",
+    "toast": {
+      "updateSuccess": "تم تحديث الملف الشخصي بنجاح",
+      "passwordSuccess": "تم تحديث كلمة المرور بنجاح"
+    },
+    "validation": {
+      "nameRequired": "الاسم مطلوب",
+      "nameMinLength": "يجب أن يتكون الاسم من حرفين على الأقل",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "يرجى إدخال بريد إلكتروني صالح",
+      "currentPasswordRequired": "كلمة المرور الحالية مطلوبة",
+      "newPasswordRequired": "كلمة المرور الجديدة مطلوبة",
+      "newPasswordMinLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+      "confirmPasswordRequired": "يرجى تأكيد كلمة المرور الجديدة",
+      "confirmPasswordMismatch": "كلمتا المرور غير متطابقتين"
+    }
   }
 }

@@ -106,5 +106,55 @@
         "loginLinkText": "Login"
       }
     }
+  },
+  "profile": {
+    "title": "Profile",
+    "description": "Manage your personal information and security settings",
+    "personalInfo": {
+      "title": "Personal Information",
+      "name": {
+        "label": "Name",
+        "placeholder": "Your full name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "your@email.com"
+      },
+      "role": {
+        "label": "Role"
+      }
+    },
+    "changePassword": {
+      "title": "Change Password",
+      "currentPassword": {
+        "label": "Current Password",
+        "placeholder": "Enter your current password"
+      },
+      "newPassword": {
+        "label": "New Password",
+        "placeholder": "Enter a new password"
+      },
+      "confirmPassword": {
+        "label": "Confirm New Password",
+        "placeholder": "Re-enter your new password"
+      }
+    },
+    "save": "Save Changes",
+    "updatePassword": "Update Password",
+    "toast": {
+      "updateSuccess": "Profile updated successfully",
+      "passwordSuccess": "Password updated successfully"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "nameMinLength": "Name must be at least 2 characters",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email",
+      "currentPasswordRequired": "Current password is required",
+      "newPasswordRequired": "New password is required",
+      "newPasswordMinLength": "Password must be at least 8 characters",
+      "confirmPasswordRequired": "Please confirm your new password",
+      "confirmPasswordMismatch": "Passwords do not match"
+    }
   }
 }

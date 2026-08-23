@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ProfileController;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,4 +18,10 @@ Route::prefix('api/v1')->group(function () {
             'tenant_locale' => $request->user()->tenant->locale,
         ];
     });
+
+    Route::middleware(['auth:sanctum', 'password.changed'])->group(function(){
+        Route::get('/profile', [ProfileController::class, 'show']);
+        Route::put('/profile', [ProfileController::class, 'update']);
+    });
+
 });
