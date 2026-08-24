@@ -107,6 +107,66 @@
       }
     }
   },
+  "team": {
+    "title": "Team Settings",
+    "description": "Manage your team members and their roles",
+    "addUser": "Add User",
+    "addUserTitle": "Add New User",
+    "addUserDescription": "Create a new staff account. Share the credentials directly — no email will be sent.",
+    "name": {
+      "label": "Name",
+      "placeholder": "Full name"
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "user@example.com"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Temporary password"
+    },
+    "passwordConfirmation": {
+      "label": "Confirm Password",
+      "placeholder": "Re-enter password"
+    },
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "createdAt": "Joined",
+      "actions": "Actions"
+    },
+    "roles": {
+      "owner": "Owner",
+      "staff": "Staff"
+    },
+    "empty": {
+      "title": "No team members yet",
+      "description": "Add staff members to your team so they can help manage your business."
+    },
+    "delete": {
+      "button": "Remove",
+      "confirmTitle": "Remove team member",
+      "confirmDescription": "Are you sure you want to remove {name}? This action cannot be undone.",
+      "confirmButton": "Remove",
+      "cancelButton": "Cancel"
+    },
+    "toast": {
+      "createSuccess": "User created successfully",
+      "deleteSuccess": "User removed successfully",
+      "error": "Something went wrong"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "nameMinLength": "Name must be at least 2 characters",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email",
+      "passwordRequired": "Password is required",
+      "passwordMinLength": "Password must be at least 8 characters",
+      "passwordConfirmationRequired": "Please confirm the password",
+      "passwordConfirmationMismatch": "Passwords do not match"
+    }
+  },
   "profile": {
     "title": "Profile",
     "description": "Manage your personal information and security settings",

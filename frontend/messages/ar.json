@@ -107,6 +107,66 @@
       }
     }
   },
+  "team": {
+    "title": "إعدادات الفريق",
+    "description": "إدارة أعضاء الفريق والأدوار الخاصة بهم",
+    "addUser": "إضافة مستخدم",
+    "addUserTitle": "إضافة مستخدم جديد",
+    "addUserDescription": "إنشاء حساب موظف جديد. شارك بيانات الاعتماد مباشرة — لن يتم إرسال بريد إلكتروني.",
+    "name": {
+      "label": "الاسم",
+      "placeholder": "الاسم الكامل"
+    },
+    "email": {
+      "label": "البريد الإلكتروني",
+      "placeholder": "user@example.com"
+    },
+    "password": {
+      "label": "كلمة المرور",
+      "placeholder": "كلمة المرور المؤقتة"
+    },
+    "passwordConfirmation": {
+      "label": "تأكيد كلمة المرور",
+      "placeholder": "أعد إدخال كلمة المرور"
+    },
+    "columns": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "role": "الدور",
+      "createdAt": "تاريخ الانضمام",
+      "actions": "الإجراءات"
+    },
+    "roles": {
+      "owner": "المالك",
+      "staff": "موظف"
+    },
+    "empty": {
+      "title": "لا يوجد أعضاء فريق بعد",
+      "description": "أضف أعضاء فريقك حتى يتمكنوا من المساعدة في إدارة أعمالك."
+    },
+    "delete": {
+      "button": "إزالة",
+      "confirmTitle": "إزالة عضو الفريق",
+      "confirmDescription": "هل أنت متأكد أنك تريد إزالة {name}؟ لا يمكن التراجع عن هذا الإجراء.",
+      "confirmButton": "إزالة",
+      "cancelButton": "إلغاء"
+    },
+    "toast": {
+      "createSuccess": "تم إنشاء المستخدم بنجاح",
+      "deleteSuccess": "تم إزالة المستخدم بنجاح",
+      "error": "حدث خطأ ما"
+    },
+    "validation": {
+      "nameRequired": "الاسم مطلوب",
+      "nameMinLength": "يجب أن يتكون الاسم من حرفين على الأقل",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "يرجى إدخال بريد إلكتروني صالح",
+      "passwordRequired": "كلمة المرور مطلوبة",
+      "passwordMinLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+      "passwordConfirmationRequired": "يرجى تأكيد كلمة المرور",
+      "passwordConfirmationMismatch": "كلمتا المرور غير متطابقتين"
+    }
+  },
   "profile": {
     "title": "الملف الشخصي",
     "description": "إدارة معلوماتك الشخصية وإعدادات الأمان",

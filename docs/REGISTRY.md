@@ -15,11 +15,11 @@ Base path: `/api/v1/...`
 | POST | `/users` | `Auth\StaffController@store` | FR-3 | ✅ |
 | DELETE | `/users/{user}` | `Auth\StaffController@destroy` | FR-3 | ✅ |
 | **Customers** | | | |
-| GET | `/customers` | `CustomerController@index` | FR-4 | ❌ |
-| POST | `/customers` | `CustomerController@store` | FR-4 | ❌ |
-| GET | `/customers/{customer}` | `CustomerController@show` | FR-4 | ❌ |
-| PATCH | `/customers/{customer}` | `CustomerController@update` | FR-4 | ❌ |
-| DELETE | `/customers/{customer}` | `CustomerController@destroy` | FR-4 | ❌ |
+| GET | `/customers` | `CustomerController@index` | FR-4 | ✅ |
+| POST | `/customers` | `CustomerController@store` | FR-4 | ✅ |
+| GET | `/customers/{customer}` | `CustomerController@show` | FR-4 | ✅ |
+| PATCH | `/customers/{customer}` | `CustomerController@update` | FR-4 | ✅ |
+| DELETE | `/customers/{customer}` | `CustomerController@destroy` | FR-4 | ✅ |
 | **Products** | | | |
 | GET | `/products` | `ProductController@index` | FR-5 | ❌ |
 | POST | `/products` | `ProductController@store` | FR-5 | ❌ |
