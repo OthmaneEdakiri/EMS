@@ -139,6 +139,79 @@ export const passwordChangeAction = async (values: Record<string, string>) => {
   }
 };
 
+export const getStaffUsersAction = async () => {
+  try {
+    const token = (await cookies()).get("access_token")?.value;
+    const axiosServer = await createAxiosServer(token);
+    const response = await axiosServer.get("/users");
+    return {
+      status: 200,
+      data: response.data.data,
+    };
+  } catch (error: any) {
+    const status = error.response?.status || 500;
+    const data = error.response?.data;
+    return {
+      status,
+      message: data?.message || "An unexpected error occurred.",
+    };
+  }
+};
+
+export const createStaffUserAction = async (values: Record<string, string>) => {
+  try {
+    const token = (await cookies()).get("access_token")?.value;
+    const axiosServer = await createAxiosServer(token);
+    const response = await axiosServer.post("/users", values);
+    if (response.status === 201) {
+      return {
+        status: 201,
+        data: response.data.data,
+      };
+    }
+  } catch (error: any) {
+    const status = error.response?.status || 500;
+    const data = error.response?.data;
+    if (status === 422) {
+      return {
+        status,
+        message: data?.message || "Validation failed.",
+        errors: data?.errors || {},
+      };
+    }
+    return {
+      status,
+      message:
+        data?.message ||
+        error.message ||
+        "An unexpected server error occurred.",
+    };
+  }
+};
+
+export const deleteStaffUserAction = async (userId: number) => {
+  try {
+    const token = (await cookies()).get("access_token")?.value;
+    const axiosServer = await createAxiosServer(token);
+    const response = await axiosServer.delete(`/users/${userId}`);
+    if (response.status === 204) {
+      return {
+        status: 204,
+      };
+    }
+  } catch (error: any) {
+    const status = error.response?.status || 500;
+    const data = error.response?.data;
+    return {
+      status,
+      message:
+        data?.message ||
+        error.message ||
+        "An unexpected server error occurred.",
+    };
+  }
+};
+
 export const getProfileAction = async () => {
   try {
     const token = (await cookies()).get("access_token")?.value;
