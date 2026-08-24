@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -29,6 +30,41 @@ class User extends Authenticatable
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
+    }
+
+    public function createdCustomers(): HasMany
+    {
+        return $this->hasMany(Customer::class, 'created_by');
+    }
+
+    public function updatedCustomers(): HasMany
+    {
+        return $this->hasMany(Customer::class, 'updated_by');
+    }
+
+    public function createdProducts(): HasMany
+    {
+        return $this->hasMany(Product::class, 'created_by');
+    }
+
+    public function updatedProducts(): HasMany
+    {
+        return $this->hasMany(Product::class, 'updated_by');
+    }
+
+    public function createdInvoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'created_by');
+    }
+
+    public function updatedInvoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'updated_by');
+    }
+
+    public function createdPayments(): HasMany
+    {
+        return $this->hasMany(Payment::class, 'created_by');
     }
 
     public function isOwner(): bool
