@@ -167,6 +167,61 @@
       "passwordConfirmationMismatch": "كلمتا المرور غير متطابقتين"
     }
   },
+  "customers": {
+    "title": "العملاء",
+    "description": "إدارة دليل العملاء",
+    "addCustomer": "إضافة عميل",
+    "addCustomerTitle": "إضافة عميل جديد",
+    "addCustomerDescription": "أضف عميلًا جديدًا إلى الدليل. فقط الاسم مطلوب.",
+    "name": {
+      "label": "الاسم",
+      "placeholder": "اسم العميل"
+    },
+    "email": {
+      "label": "البريد الإلكتروني",
+      "placeholder": "customer@example.com"
+    },
+    "phone": {
+      "label": "الهاتف",
+      "placeholder": "+1 234 567 890"
+    },
+    "taxId": {
+      "label": "المعرّف الضريبي",
+      "placeholder": "رقم التعريف الضريبي"
+    },
+    "address": {
+      "label": "العنوان",
+      "placeholder": "العنوان الكامل"
+    },
+    "columns": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "phone": "الهاتف",
+      "taxId": "المعرّف الضريبي",
+      "createdAt": "تاريخ الإنشاء",
+      "actions": "الإجراءات"
+    },
+    "empty": {
+      "title": "لا يوجد عملاء بعد",
+      "description": "أضف أول عميل لبدء إنشاء الفواتير."
+    },
+    "delete": {
+      "confirmTitle": "حذف العميل",
+      "confirmDescription": "هل أنت متأكد أنك تريد حذف {name}؟ لا يمكن التراجع عن هذا الإجراء.",
+      "confirmButton": "حذف",
+      "cancelButton": "إلغاء"
+    },
+    "toast": {
+      "createSuccess": "تم إنشاء العميل بنجاح",
+      "deleteSuccess": "تم حذف العميل بنجاح",
+      "error": "حدث خطأ ما"
+    },
+    "validation": {
+      "nameRequired": "الاسم مطلوب",
+      "nameMinLength": "يجب أن يتكون الاسم من حرفين على الأقل",
+      "emailInvalid": "يرجى إدخال بريد إلكتروني صالح"
+    }
+  },
   "profile": {
     "title": "الملف الشخصي",
     "description": "إدارة معلوماتك الشخصية وإعدادات الأمان",

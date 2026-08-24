@@ -167,6 +167,61 @@
       "passwordConfirmationMismatch": "Passwords do not match"
     }
   },
+  "customers": {
+    "title": "Customers",
+    "description": "Manage your customer directory",
+    "addCustomer": "Add Customer",
+    "addCustomerTitle": "Add New Customer",
+    "addCustomerDescription": "Add a new customer to your directory. Only the name is required.",
+    "name": {
+      "label": "Name",
+      "placeholder": "Customer name"
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "customer@example.com"
+    },
+    "phone": {
+      "label": "Phone",
+      "placeholder": "+1 234 567 890"
+    },
+    "taxId": {
+      "label": "Tax ID",
+      "placeholder": "Tax identification number"
+    },
+    "address": {
+      "label": "Address",
+      "placeholder": "Full address"
+    },
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "taxId": "Tax ID",
+      "createdAt": "Created",
+      "actions": "Actions"
+    },
+    "empty": {
+      "title": "No customers yet",
+      "description": "Add your first customer to start creating invoices."
+    },
+    "delete": {
+      "confirmTitle": "Delete customer",
+      "confirmDescription": "Are you sure you want to delete {name}? This action cannot be undone.",
+      "confirmButton": "Delete",
+      "cancelButton": "Cancel"
+    },
+    "toast": {
+      "createSuccess": "Customer created successfully",
+      "deleteSuccess": "Customer deleted successfully",
+      "error": "Something went wrong"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "nameMinLength": "Name must be at least 2 characters",
+      "emailInvalid": "Please enter a valid email"
+    }
+  },
   "profile": {
     "title": "Profile",
     "description": "Manage your personal information and security settings",
