@@ -59,13 +59,24 @@ const CustomersPage = () => {
   const [showForm, setShowForm] = useState(false);
   const [creating, setCreating] = useState(false);
   const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 15,
+    pageCount: 1,
+  });
 
-  const fetchCustomers = useCallback(async () => {
+  const fetchCustomers = useCallback(async (page: number, perPage: number) => {
     setLoading(true);
     try {
-      const result = await getCustomersAction();
+      const result = await getCustomersAction(page, perPage);
       if (result.status === 200 && result.data) {
         setCustomers(result.data);
+        if (result.meta) {
+          setPagination((prev) => ({
+            ...prev,
+            pageCount: result.meta.last_page,
+          }));
+        }
       }
     } finally {
       setLoading(false);
@@ -73,17 +84,17 @@ const CustomersPage = () => {
   }, []);
 
   useEffect(() => {
-    fetchCustomers();
-  }, [fetchCustomers]);
+    fetchCustomers(pagination.pageIndex + 1, pagination.pageSize);
+  }, [pagination.pageIndex, pagination.pageSize, fetchCustomers]);
 
   const handleCreate = async (values: Record<string, any>) => {
     setCreating(true);
     try {
       const result = await createCustomerAction(values);
       if (result?.status === 201 && result.data) {
-        setCustomers((prev) => [result.data, ...prev]);
         toast.success(t("toast.createSuccess"));
         setShowForm(false);
+        fetchCustomers(pagination.pageIndex + 1, pagination.pageSize);
       } else {
         toast.error(t("toast.error"));
       }
@@ -98,7 +109,7 @@ const CustomersPage = () => {
       const result = await deleteCustomerAction(customerId);
       if (result?.status === 204) {
         toast.success(t("toast.deleteSuccess"));
-        setCustomers((prev) => prev.filter((c) => c.id !== customerId));
+        fetchCustomers(pagination.pageIndex + 1, pagination.pageSize);
       } else {
         toast.error(result?.message || t("toast.error"));
       }
@@ -142,7 +153,9 @@ const CustomersPage = () => {
         const c = row.original;
         return (
           <AlertDialog>
-            <AlertDialogTrigger render={<Button variant="ghost" size="icon-xs" />}>
+            <AlertDialogTrigger
+              render={<Button variant="ghost" size="icon-xs" />}
+            >
               <Trash2 className="size-3 text-destructive" />
             </AlertDialogTrigger>
             <AlertDialogContent>
@@ -153,7 +166,9 @@ const CustomersPage = () => {
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>{t("delete.cancelButton")}</AlertDialogCancel>
+                <AlertDialogCancel>
+                  {t("delete.cancelButton")}
+                </AlertDialogCancel>
                 <AlertDialogAction
                   variant="destructive"
                   disabled={deletingId === c.id}
@@ -173,6 +188,26 @@ const CustomersPage = () => {
     data: customers,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    manualPagination: true,
+    pageCount: pagination.pageCount,
+    onPaginationChange: (updater) => {
+      setPagination((prev) => {
+        const next =
+          typeof updater === "function"
+            ? updater({
+                pageIndex: prev.pageIndex,
+                pageSize: prev.pageSize,
+              })
+            : updater;
+        return { ...prev, ...next };
+      });
+    },
+    state: {
+      pagination: {
+        pageIndex: pagination.pageIndex,
+        pageSize: pagination.pageSize,
+      },
+    },
   });
 
   return (
@@ -197,7 +232,9 @@ const CustomersPage = () => {
               <div className="mb-4 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <UserPlus className="size-5 text-muted-foreground" />
-                  <h2 className="text-lg font-semibold">{t("addCustomerTitle")}</h2>
+                  <h2 className="text-lg font-semibold">
+                    {t("addCustomerTitle")}
+                  </h2>
                 </div>
                 <Button
                   variant="ghost"
@@ -228,38 +265,72 @@ const CustomersPage = () => {
                 </p>
               </div>
             ) : (
-              <Table>
-                <TableHeader>
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                      {headerGroup.headers.map((header) => (
-                        <TableHead key={header.id}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext(),
-                              )}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableHeader>
-                <TableBody>
-                  {table.getRowModel().rows.map((row) => (
-                    <TableRow key={row.id}>
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <>
+                <Table>
+                  <TableHeader>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                      <TableRow key={headerGroup.id}>
+                        {headerGroup.headers.map((header) => (
+                          <TableHead key={header.id}>
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext(),
+                                )}
+                          </TableHead>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableHeader>
+                  <TableBody>
+                    {table.getRowModel().rows.map((row) => (
+                      <TableRow key={row.id}>
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                {pagination.pageCount > 1 && (
+                  <div className="flex items-center justify-between border-t px-4 py-3">
+                    <p className="text-sm text-muted-foreground">
+                      {t("pagination.page")} {pagination.pageIndex + 1}{" "}
+                      {t("pagination.of")} {pagination.pageCount}
+                    </p>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        disabled={pagination.pageIndex === 0}
+                        onClick={() =>
+                          table.setPageIndex(pagination.pageIndex - 1)
+                        }
+                      >
+                        {t("pagination.previous")}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        disabled={
+                          pagination.pageIndex >= pagination.pageCount - 1
+                        }
+                        onClick={() =>
+                          table.setPageIndex(pagination.pageIndex + 1)
+                        }
+                      >
+                        {t("pagination.next")}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -289,7 +360,8 @@ const AddCustomerForm = ({
         }}
       >
         <Field.Label className="text-sm font-medium">
-          {t("name.label")}<span className="text-destructive">*</span>
+          {t("name.label")}
+          <span className="text-destructive">*</span>
         </Field.Label>
         <Input type="text" placeholder={t("name.placeholder")} required />
         <Field.Error className="text-sm text-destructive" />

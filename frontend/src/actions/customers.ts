@@ -3,14 +3,17 @@
 import { createAxiosServer } from "@/lib/axios";
 import { cookies } from "next/headers";
 
-export const getCustomersAction = async () => {
+export const getCustomersAction = async (page = 1, perPage = 15) => {
   try {
     const token = (await cookies()).get("access_token")?.value;
     const axiosServer = await createAxiosServer(token);
-    const response = await axiosServer.get("/customers");
+    const response = await axiosServer.get("/customers", {
+      params: { page, per_page: perPage },
+    });
     return {
       status: 200,
       data: response.data.data,
+      meta: response.data.meta,
     };
   } catch (error: any) {
     const status = error.response?.status || 500;

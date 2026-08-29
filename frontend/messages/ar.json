@@ -220,6 +220,12 @@
       "nameRequired": "الاسم مطلوب",
       "nameMinLength": "يجب أن يتكون الاسم من حرفين على الأقل",
       "emailInvalid": "يرجى إدخال بريد إلكتروني صالح"
+    },
+    "pagination": {
+      "page": "صفحة",
+      "of": "من",
+      "previous": "السابق",
+      "next": "التالي"
     }
   },
   "profile": {

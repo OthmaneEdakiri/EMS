@@ -9,11 +9,19 @@ class CustomerController extends Controller
 {
     public function index(Request $request)
     {
-        $customers = Customer::where('tenant_id', $request->user()->tenant_id)
-            ->whereNull('archived_at')
-            ->get();
+        $perPage = min(max((int) $request->input('per_page', 15), 1), 100);
 
-        return $this->success($customers);
+        $paginator = Customer::where('tenant_id', $request->user()->tenant_id)
+            ->whereNull('archived_at')
+            ->orderByDesc('id')
+            ->paginate($perPage);
+
+        return $this->success($paginator->items(), [
+            'current_page' => $paginator->currentPage(),
+            'last_page' => $paginator->lastPage(),
+            'per_page' => $paginator->perPage(),
+            'total' => $paginator->total(),
+        ]);
     }
 
     public function store(Request $request)

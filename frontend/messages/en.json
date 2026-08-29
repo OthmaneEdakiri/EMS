@@ -220,6 +220,12 @@
       "nameRequired": "Name is required",
       "nameMinLength": "Name must be at least 2 characters",
       "emailInvalid": "Please enter a valid email"
+    },
+    "pagination": {
+      "page": "Page",
+      "of": "of",
+      "previous": "Previous",
+      "next": "Next"
     }
   },
   "profile": {
