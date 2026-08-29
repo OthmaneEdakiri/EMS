@@ -3,13 +3,19 @@
 import { createAxiosServer } from "@/lib/axios";
 import { cookies } from "next/headers";
 
-export const getCustomersAction = async (page = 1, perPage = 15) => {
+export const getCustomersAction = async (
+  page = 1,
+  perPage = 15,
+  search?: string,
+) => {
   try {
     const token = (await cookies()).get("access_token")?.value;
     const axiosServer = await createAxiosServer(token);
-    const response = await axiosServer.get("/customers", {
-      params: { page, per_page: perPage },
-    });
+    const params: Record<string, string | number> = { page, per_page: perPage };
+    if (search && search.trim()) {
+      params.search = search.trim();
+    }
+    const response = await axiosServer.get("/customers", { params });
     return {
       status: 200,
       data: response.data.data,
