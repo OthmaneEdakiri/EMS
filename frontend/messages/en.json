@@ -201,6 +201,10 @@
       "createdAt": "Created",
       "actions": "Actions"
     },
+    "search": {
+      "placeholder": "Search customers...",
+      "noResults": "No customers match your search"
+    },
     "empty": {
       "title": "No customers yet",
       "description": "Add your first customer to start creating invoices."

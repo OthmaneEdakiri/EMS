@@ -13,6 +13,15 @@ class CustomerController extends Controller
 
         $paginator = Customer::where('tenant_id', $request->user()->tenant_id)
             ->whereNull('archived_at')
+            ->when($request->input('search'), function ($query, $search) {
+                $term = '%' . trim($search) . '%';
+                $query->where(function ($q) use ($term) {
+                    $q->where('name', 'ilike', $term)
+                        ->orWhere('email', 'ilike', $term)
+                        ->orWhere('phone', 'ilike', $term)
+                        ->orWhere('tax_id', 'ilike', $term);
+                });
+            })
             ->orderByDesc('id')
             ->paginate($perPage);
 
