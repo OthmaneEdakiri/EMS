@@ -232,6 +232,79 @@
       "next": "Next"
     }
   },
+  "products": {
+    "title": "Products & Services",
+    "description": "Manage your products and services catalog",
+    "addProduct": "Add Product",
+    "updateProduct": "Update Product",
+    "addProductTitle": "Add New Product",
+    "addProductDescription": "Add a new product or service to your catalog.",
+    "editProductTitle": "Edit Product",
+    "editProductDescription": "Update the product details below.",
+    "name": {
+      "label": "Name",
+      "placeholder": "Product name"
+    },
+    "type": {
+      "label": "Type",
+      "placeholder": "Select a type",
+      "options": {
+        "product": "Product",
+        "service": "Service"
+      }
+    },
+    "unitPrice": {
+      "label": "Unit Price",
+      "placeholder": "0.00"
+    },
+    "taxRate": {
+      "label": "Tax Rate",
+      "placeholder": "0"
+    },
+    "columns": {
+      "name": "Name",
+      "type": "Type",
+      "unitPrice": "Unit Price",
+      "taxRate": "Tax Rate",
+      "createdAt": "Created",
+      "actions": "Actions"
+    },
+    "search": {
+      "placeholder": "Search products...",
+      "noResults": "No products match your search"
+    },
+    "empty": {
+      "title": "No products yet",
+      "description": "Add your first product or service to start creating invoices."
+    },
+    "delete": {
+      "confirmTitle": "Delete product",
+      "confirmDescription": "Are you sure you want to delete {name}? This action cannot be undone.",
+      "confirmButton": "Delete",
+      "cancelButton": "Cancel"
+    },
+    "toast": {
+      "createSuccess": "Product created successfully",
+      "updateSuccess": "Product updated successfully",
+      "deleteSuccess": "Product deleted successfully",
+      "error": "Something went wrong"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "nameMinLength": "Name must be at least 2 characters",
+      "typeRequired": "Type is required",
+      "typeInvalid": "Please select a valid type",
+      "unitPriceRequired": "Unit price is required",
+      "unitPriceInvalid": "Please enter a valid price",
+      "taxRateInvalid": "Tax rate must be between 0 and 100"
+    },
+    "pagination": {
+      "page": "Page",
+      "of": "of",
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
   "profile": {
     "title": "Profile",
     "description": "Manage your personal information and security settings",
