@@ -21,11 +21,11 @@ Base path: `/api/v1/...`
 | PATCH | `/customers/{customer}` | `CustomerController@update` | FR-4 | ✅ |
 | DELETE | `/customers/{customer}` | `CustomerController@destroy` | FR-4 | ✅ |
 | **Products** | | | |
-| GET | `/products` | `ProductController@index` | FR-5 | ❌ |
-| POST | `/products` | `ProductController@store` | FR-5 | ❌ |
-| GET | `/products/{product}` | `ProductController@show` | FR-5 | ❌ |
-| PATCH | `/products/{product}` | `ProductController@update` | FR-5 | ❌ |
-| DELETE | `/products/{product}` | `ProductController@destroy` | FR-5 | ❌ |
+| GET | `/products` | `ProductController@index` | FR-5 | ✅ |
+| POST | `/products` | `ProductController@store` | FR-5 | ✅ |
+| GET | `/products/{product}` | `ProductController@show` | FR-5 | ✅ |
+| PATCH | `/products/{product}` | `ProductController@update` | FR-5 | ✅ |
+| DELETE | `/products/{product}` | `ProductController@destroy` | FR-5 | ✅ |
 | **Invoices** | | | |
 | GET | `/invoices` | `InvoiceController@index` | FR-9 | ❌ |
 | POST | `/invoices` | `InvoiceController@store` | FR-6 | ❌ |

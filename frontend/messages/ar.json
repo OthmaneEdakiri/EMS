@@ -232,6 +232,79 @@
       "next": "التالي"
     }
   },
+  "products": {
+    "title": "المنتجات والخدمات",
+    "description": "إدارة كتالوج المنتجات والخدمات",
+    "addProduct": "إضافة منتج",
+    "updateProduct": "تحديث المنتج",
+    "addProductTitle": "إضافة منتج جديد",
+    "addProductDescription": "أضف منتجًا أو خدمة جديدة إلى الكتالوج.",
+    "editProductTitle": "تعديل المنتج",
+    "editProductDescription": "تحديث تفاصيل المنتج أدناه.",
+    "name": {
+      "label": "الاسم",
+      "placeholder": "اسم المنتج"
+    },
+    "type": {
+      "label": "النوع",
+      "placeholder": "اختر النوع",
+      "options": {
+        "product": "منتج",
+        "service": "خدمة"
+      }
+    },
+    "unitPrice": {
+      "label": "سعر الوحدة",
+      "placeholder": "0.00"
+    },
+    "taxRate": {
+      "label": "نسبة الضريبة",
+      "placeholder": "0"
+    },
+    "columns": {
+      "name": "الاسم",
+      "type": "النوع",
+      "unitPrice": "سعر الوحدة",
+      "taxRate": "الضريبة",
+      "createdAt": "تاريخ الإنشاء",
+      "actions": "الإجراءات"
+    },
+    "search": {
+      "placeholder": "البحث عن منتجات...",
+      "noResults": "لا يوجد منتجات تطابق بحثك"
+    },
+    "empty": {
+      "title": "لا يوجد منتجات بعد",
+      "description": "أضف أول منتج أو خدمة لبدء إنشاء الفواتير."
+    },
+    "delete": {
+      "confirmTitle": "حذف المنتج",
+      "confirmDescription": "هل أنت متأكد أنك تريد حذف {name}؟ لا يمكن التراجع عن هذا الإجراء.",
+      "confirmButton": "حذف",
+      "cancelButton": "إلغاء"
+    },
+    "toast": {
+      "createSuccess": "تم إنشاء المنتج بنجاح",
+      "updateSuccess": "تم تحديث المنتج بنجاح",
+      "deleteSuccess": "تم حذف المنتج بنجاح",
+      "error": "حدث خطأ ما"
+    },
+    "validation": {
+      "nameRequired": "الاسم مطلوب",
+      "nameMinLength": "يجب أن يتكون الاسم من حرفين على الأقل",
+      "typeRequired": "النوع مطلوب",
+      "typeInvalid": "يرجى اختيار نوع صالح",
+      "unitPriceRequired": "سعر الوحدة مطلوب",
+      "unitPriceInvalid": "يرجى إدخال سعر صالح",
+      "taxRateInvalid": "يجب أن تكون نسبة الضريبة بين 0 و 100"
+    },
+    "pagination": {
+      "page": "صفحة",
+      "of": "من",
+      "previous": "السابق",
+      "next": "التالي"
+    }
+  },
   "profile": {
     "title": "الملف الشخصي",
     "description": "إدارة معلوماتك الشخصية وإعدادات الأمان",
