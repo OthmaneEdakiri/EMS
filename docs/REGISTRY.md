@@ -27,15 +27,15 @@ Base path: `/api/v1/...`
 | PATCH | `/products/{product}` | `ProductController@update` | FR-5 | ✅ |
 | DELETE | `/products/{product}` | `ProductController@destroy` | FR-5 | ✅ |
 | **Invoices** | | | |
-| GET | `/invoices` | `InvoiceController@index` | FR-9 | ❌ |
-| POST | `/invoices` | `InvoiceController@store` | FR-6 | ❌ |
-| GET | `/invoices/{invoice}` | `InvoiceController@show` | FR-6 | ❌ |
-| PATCH | `/invoices/{invoice}` | `InvoiceController@update` | FR-6 | ❌ |
-| DELETE | `/invoices/{invoice}` | `InvoiceController@destroy` | FR-6 | ❌ |
-| POST | `/invoices/{invoice}/send` | `InvoiceController@send` | FR-6 | ❌ |
-| POST | `/invoices/{invoice}/cancel` | `InvoiceController@cancel` | §8 | ❌ |
-| GET | `/invoices/{invoice}/pdf` | `InvoiceController@downloadPdf` | FR-7 | ❌ |
+| GET | `/invoices` | `InvoiceController@index` | FR-9 | ✅ |
+| POST | `/invoices` | `InvoiceController@store` | FR-6 | ✅ |
+| GET | `/invoices/{invoice}` | `InvoiceController@show` | FR-6 | ✅ |
+| PATCH | `/invoices/{invoice}` | `InvoiceController@update` | FR-6 | ✅ |
+| DELETE | `/invoices/{invoice}` | `InvoiceController@destroy` | FR-6 | ✅ |
+| POST | `/invoices/{invoice}/send` | `InvoiceController@send` | FR-6 | ✅ |
+| POST | `/invoices/{invoice}/cancel` | `InvoiceController@cancel` | §8 | ✅ |
+| GET | `/invoices/{invoice}/pdf` | `InvoiceController@downloadPdf` | FR-7 | ✅ |
 | **Payments** | | | |
-| POST | `/invoices/{invoice}/payments` | `PaymentController@store` | FR-8 | ❌ |
+| POST | `/invoices/{invoice}/payments` | `PaymentController@store` | FR-8 | ✅ |
 
 **Status:** ✅ = Implemented, ❌ = Not yet implemented

@@ -305,6 +305,115 @@
       "next": "التالي"
     }
   },
+  "invoices": {
+    "title": "الفواتير",
+    "description": "إدارة فواتيرك",
+    "createInvoice": "إنشاء فاتورة",
+    "status": {
+      "all": "الكل",
+      "draft": "مسودة",
+      "sent": "مرسلة",
+      "partially_paid": "مدفوعة جزئياً",
+      "paid": "مدفوعة",
+      "overdue": "متأخرة",
+      "cancelled": "ملغاة"
+    },
+    "columns": {
+      "number": "رقم الفاتورة",
+      "customer": "العميل",
+      "date": "التاريخ",
+      "dueDate": "تاريخ الاستحقاق",
+      "total": "الإجمالي",
+      "status": "الحالة",
+      "actions": "الإجراءات"
+    },
+    "search": {
+      "placeholder": "البحث عن فواتير..."
+    },
+    "empty": {
+      "title": "لا توجد فواتير بعد",
+      "description": "أنشئ فاتورتك الأولى لبدء فواتير العملاء."
+    },
+    "form": {
+      "title": "إنشاء فاتورة",
+      "customer": {
+        "label": "العميل",
+        "placeholder": "اختر العميل"
+      },
+      "issueDate": { "label": "تاريخ الإصدار" },
+      "dueDate": { "label": "تاريخ الاستحقاق" },
+      "lines": {
+        "title": "بنود الفاتورة",
+        "product": "المنتج",
+        "description": "الوصف",
+        "qty": "الكمية",
+        "unitPrice": "سعر الوحدة",
+        "taxRate": "الضريبة %",
+        "customLine": "بند مخصص",
+        "error": "مطلوب بند واحد على الأقل"
+      },
+      "addLine": "إضافة بند",
+      "subtotal": "المجموع الفرعي",
+      "taxTotal": "الضريبة",
+      "total": "الإجمالي",
+      "saveDraft": "حفظ كمسودة",
+      "cancel": "إلغاء"
+    },
+    "detail": {
+      "notFound": "الفاتورة غير موجودة",
+      "send": "تحديد كمرسلة",
+      "downloadPdf": "تحميل PDF",
+      "cancel": "إلغاء الفاتورة",
+      "recordPayment": "تسجيل دفعة",
+      "customer": "العميل",
+      "info": "معلومات الفاتورة",
+      "issueDate": "تاريخ الإصدار",
+      "dueDate": "تاريخ الاستحقاق",
+      "lines": "بنود الفاتورة",
+      "payments": "سجل المدفوعات",
+      "lineColumns": {
+        "description": "الوصف",
+        "qty": "الكمية",
+        "unitPrice": "سعر الوحدة",
+        "tax": "الضريبة",
+        "total": "الإجمالي"
+      },
+      "paymentColumns": {
+        "date": "التاريخ",
+        "method": "الطريقة",
+        "amount": "المبلغ"
+      },
+      "paymentForm": {
+        "title": "تسجيل دفعة",
+        "amount": "المبلغ",
+        "method": "الطريقة",
+        "date": "التاريخ",
+        "remaining": "المتبقي",
+        "cancel": "إلغاء",
+        "submit": "تسجيل الدفعة",
+        "methods": {
+          "cash": "نقداً",
+          "bankTransfer": "تحويل بنكي",
+          "check": "شيك",
+          "card": "بطاقة"
+        }
+      }
+    },
+    "toast": {
+      "createSuccess": "تم إنشاء الفاتورة بنجاح",
+      "deleteSuccess": "تم حذف الفاتورة بنجاح",
+      "sendSuccess": "تم تحديد الفاتورة كمرسلة",
+      "cancelSuccess": "تم إلغاء الفاتورة",
+      "paymentSuccess": "تم تسجيل الدفعة بنجاح",
+      "error": "حدث خطأ ما"
+    },
+    "pagination": {
+      "page": "صفحة",
+      "of": "من",
+      "previous": "السابق",
+      "next": "التالي"
+    }
+  },
   "profile": {
     "title": "الملف الشخصي",
     "description": "إدارة معلوماتك الشخصية وإعدادات الأمان",
