@@ -305,6 +305,115 @@
       "next": "Next"
     }
   },
+  "invoices": {
+    "title": "Invoices",
+    "description": "Manage your invoices",
+    "createInvoice": "Create Invoice",
+    "status": {
+      "all": "All",
+      "draft": "Draft",
+      "sent": "Sent",
+      "partially_paid": "Partially Paid",
+      "paid": "Paid",
+      "overdue": "Overdue",
+      "cancelled": "Cancelled"
+    },
+    "columns": {
+      "number": "Invoice #",
+      "customer": "Customer",
+      "date": "Date",
+      "dueDate": "Due Date",
+      "total": "Total",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "search": {
+      "placeholder": "Search invoices..."
+    },
+    "empty": {
+      "title": "No invoices yet",
+      "description": "Create your first invoice to start billing customers."
+    },
+    "form": {
+      "title": "Create Invoice",
+      "customer": {
+        "label": "Customer",
+        "placeholder": "Select a customer"
+      },
+      "issueDate": { "label": "Issue Date" },
+      "dueDate": { "label": "Due Date" },
+      "lines": {
+        "title": "Line Items",
+        "product": "Product",
+        "description": "Description",
+        "qty": "Qty",
+        "unitPrice": "Unit Price",
+        "taxRate": "Tax %",
+        "customLine": "Custom line",
+        "error": "At least one line item is required"
+      },
+      "addLine": "Add Line",
+      "subtotal": "Subtotal",
+      "taxTotal": "Tax",
+      "total": "Total",
+      "saveDraft": "Save as Draft",
+      "cancel": "Cancel"
+    },
+    "detail": {
+      "notFound": "Invoice not found",
+      "send": "Mark as Sent",
+      "downloadPdf": "Download PDF",
+      "cancel": "Cancel Invoice",
+      "recordPayment": "Record Payment",
+      "customer": "Customer",
+      "info": "Invoice Info",
+      "issueDate": "Issue Date",
+      "dueDate": "Due Date",
+      "lines": "Line Items",
+      "payments": "Payment History",
+      "lineColumns": {
+        "description": "Description",
+        "qty": "Qty",
+        "unitPrice": "Unit Price",
+        "tax": "Tax",
+        "total": "Total"
+      },
+      "paymentColumns": {
+        "date": "Date",
+        "method": "Method",
+        "amount": "Amount"
+      },
+      "paymentForm": {
+        "title": "Record Payment",
+        "amount": "Amount",
+        "method": "Method",
+        "date": "Date",
+        "remaining": "Remaining balance",
+        "cancel": "Cancel",
+        "submit": "Record Payment",
+        "methods": {
+          "cash": "Cash",
+          "bankTransfer": "Bank Transfer",
+          "check": "Check",
+          "card": "Card"
+        }
+      }
+    },
+    "toast": {
+      "createSuccess": "Invoice created successfully",
+      "deleteSuccess": "Invoice deleted successfully",
+      "sendSuccess": "Invoice marked as sent",
+      "cancelSuccess": "Invoice cancelled",
+      "paymentSuccess": "Payment recorded successfully",
+      "error": "Something went wrong"
+    },
+    "pagination": {
+      "page": "Page",
+      "of": "of",
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
   "profile": {
     "title": "Profile",
     "description": "Manage your personal information and security settings",
