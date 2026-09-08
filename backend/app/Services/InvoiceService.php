@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Invoice;
 use App\Models\InvoiceLine;
 use App\Models\Payment;
+use App\Models\Tenant;
 use Illuminate\Support\Facades\DB;
 
 class InvoiceService
@@ -14,8 +15,12 @@ class InvoiceService
      * Uses DB::transaction to prevent race conditions.
      * Numbers are never reused, even if drafts are deleted.
      */
-    public function generateNumber(int $tenantId, string $prefix = 'INV'): string
+    public function generateNumber(int $tenantId, ?string $prefix = null): string
     {
+        if ($prefix === null) {
+            $prefix = Tenant::withoutGlobalScopes()->find($tenantId)->invoice_prefix ?? 'INV';
+        }
+
         return DB::transaction(function () use ($tenantId, $prefix) {
             $lastSequence = DB::table('invoices')
                 ->where('tenant_id', $tenantId)

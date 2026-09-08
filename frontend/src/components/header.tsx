@@ -10,7 +10,7 @@ import {
   User,
   Settings,
   LogOut,
-  Languages,
+  Building2,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -99,12 +99,22 @@ export function Header() {
                   <User className="size-4" />
                   {tHeader('profile')}
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => router.push("/settings/team")}
-                >
-                  <Settings className="size-4" />
-                  {tHeader('teamSettings')}
-                </DropdownMenuItem>
+                {user?.role === 'owner' && (
+                  <>
+                    <DropdownMenuItem
+                      onClick={() => router.push("/settings/company")}
+                    >
+                      <Building2 className="size-4" />
+                      {tHeader('companySettings')}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => router.push("/settings/team")}
+                    >
+                      <Settings className="size-4" />
+                      {tHeader('teamSettings')}
+                    </DropdownMenuItem>
+                  </>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={handleLogout}

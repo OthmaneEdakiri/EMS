@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TenantSettingsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +53,11 @@ Route::prefix('api/v1')->group(function () {
         Route::post('/invoices/{invoice}/cancel', [InvoiceController::class, 'cancel']);
         Route::get('/invoices/{invoice}/pdf', [InvoiceController::class, 'pdf']);
         Route::post('/invoices/{invoice}/payments', [InvoiceController::class, 'storePayment']);
+    });
+
+    Route::middleware(['auth:sanctum', 'password.changed', 'can:manage-company-settings'])->group(function () {
+        Route::get('/settings/company', [TenantSettingsController::class, 'show']);
+        Route::patch('/settings/company', [TenantSettingsController::class, 'update']);
     });
 
 });

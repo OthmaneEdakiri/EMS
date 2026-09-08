@@ -5,12 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name', 'currency', 'currency_decimal_places', 'locale', 'invoice_prefix'])]
+#[Fillable(['name', 'logo', 'currency', 'currency_decimal_places', 'locale', 'invoice_prefix', 'updated_by'])]
 class Tenant extends Model
 {
     use HasFactory;
+
+    public function updatedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 
     public function users(): HasMany
     {

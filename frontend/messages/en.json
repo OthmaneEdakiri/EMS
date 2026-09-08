@@ -1,6 +1,7 @@
 {
   "header": {
     "profile": "Profile",
+    "companySettings": "Company Settings",
     "teamSettings": "Team Settings",
     "logout": "Logout"
   },
@@ -412,6 +413,67 @@
       "of": "of",
       "previous": "Previous",
       "next": "Next"
+    }
+  },
+  "companySettings": {
+    "title": "Company Settings",
+    "description": "Manage your company information and preferences",
+    "companyInfo": {
+      "title": "Company Information",
+      "name": {
+        "label": "Company Name",
+        "placeholder": "Your Company Ltd."
+      },
+      "invoicePrefix": {
+        "label": "Invoice Prefix",
+        "placeholder": "INV"
+      }
+    },
+    "logo": {
+      "title": "Company Logo",
+      "upload": "Upload Logo",
+      "remove": "Remove Logo",
+      "hint": "Upload a logo for your invoices. Recommended size: 400x400px. Max size: 2MB."
+    },
+    "currencyLocale": {
+      "title": "Currency & Locale",
+      "currency": {
+        "label": "Currency"
+      },
+      "locale": {
+        "label": "Language"
+      },
+      "currencyWarning": "Changing the currency will affect all new invoices. Existing invoices will keep their original currency."
+    },
+    "save": "Save Changes",
+    "currencyWarning": {
+      "title": "Currency Change Warning",
+      "description": "Changing the currency will reset invoice numbering. Existing invoices will keep their original currency. Are you sure?",
+      "confirm": "Yes, Change Currency",
+      "cancel": "Cancel"
+    },
+    "prefixWarning": {
+      "title": "Prefix Change",
+      "description": "Changing the invoice prefix will reset the invoice sequence number to 1. Are you sure?",
+      "confirm": "Yes, Change Prefix",
+      "cancel": "Cancel"
+    },
+    "toast": {
+      "updateSuccess": "Company settings updated successfully",
+      "logoUpdated": "Logo updated successfully",
+      "logoRemoved": "Logo removed successfully",
+      "logoTooLarge": "Logo must be less than 2MB",
+      "error": "Something went wrong"
+    },
+    "validation": {
+      "nameRequired": "Company name is required",
+      "nameMaxLength": "Company name must be at most 100 characters",
+      "prefixRequired": "Invoice prefix is required",
+      "prefixMaxLength": "Prefix must be at most 20 characters",
+      "currencyRequired": "Currency is required",
+      "currencySize": "Currency must be exactly 3 characters",
+      "localeRequired": "Language is required",
+      "localeInvalid": "Please select a valid language"
     }
   },
   "profile": {
