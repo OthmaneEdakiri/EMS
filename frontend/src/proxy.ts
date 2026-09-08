@@ -25,19 +25,27 @@ export default async function middleware(request: NextRequest) {
     pathname === `/${locale}/login` ||
     pathname === `/${locale}/signup` ||
     pathname === `/${locale}/login/` ||
-    pathname === `/${locale}/signup/`;
+    pathname === `/${locale}/signup/` ||
+    pathname === `/${locale}/force-change-password` ||
+    pathname === `/${locale}/force-change-password/`;
+
+  const isForceChangePath =
+    pathname === `/${locale}/force-change-password` ||
+    pathname === `/${locale}/force-change-password/`;
 
   let isAuthenticated = false;
+  let mustChangePassword = false;
 
   const token = request.cookies.get("access_token")?.value;
 
   if (token) {
     try {
       const axiosServer = await createAxiosServer(token);
-      const res = await axiosServer.get("/user");
+      const res = await axiosServer.get("/user/me");
       isAuthenticated = res.status === 200;
 
       if (isAuthenticated) {
+        mustChangePassword = res.data.must_change_password;
         const tenantLocale = res.data.tenant_locale;
         if (locale !== tenantLocale) {
           const newPathname = pathname.replace(`/${locale}`, `/${tenantLocale}`);
@@ -55,7 +63,17 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (isAuthenticated && isPublicPath) {
+  if (isAuthenticated && mustChangePassword && !isForceChangePath) {
+    return NextResponse.redirect(
+      new URL(`/${locale}/force-change-password`, request.url),
+    );
+  }
+
+  if (isAuthenticated && isPublicPath && !isForceChangePath) {
+    return NextResponse.redirect(new URL(`/${locale}/invoices`, request.url));
+  }
+
+  if (isAuthenticated && !mustChangePassword && isForceChangePath) {
     return NextResponse.redirect(new URL(`/${locale}/invoices`, request.url));
   }
 

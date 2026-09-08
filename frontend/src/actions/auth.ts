@@ -21,11 +21,13 @@ export const loginAction = async (
       });
 
       const tenantLocale = response.data.data.tenant_locale;
+      const mustChangePassword = response.data.data.must_change_password;
 
       return {
         status: 200,
         message: "Login successful",
         tenantLocale,
+        mustChangePassword,
       };
     }
   } catch (err: any) {
@@ -217,6 +219,17 @@ export const getProfileAction = async () => {
     const token = (await cookies()).get("access_token")?.value;
     const axiosServer = await createAxiosServer(token);
     const response = await axiosServer.get("/user");
+    return response.data;
+  } catch {
+    return null;
+  }
+};
+
+export const getMeAction = async () => {
+  try {
+    const token = (await cookies()).get("access_token")?.value;
+    const axiosServer = await createAxiosServer(token);
+    const response = await axiosServer.get("/user/me");
     return response.data;
   } catch {
     return null;

@@ -106,6 +106,34 @@
         "message": "لديك حساب بالفعل؟ ",
         "loginLinkText": "تسجيل الدخول"
       }
+    },
+    "forceChangePassword": {
+      "title": "غيّر كلمة المرور",
+      "description": "هذه هي المرة الأولى التي تسجل فيها الدخول. يرجى تعيين كلمة مرور جديدة للمتابعة.",
+      "submit": "تحديث كلمة المرور",
+      "logout": "تسجيل الخروج بدلاً من ذلك",
+      "currentPassword": {
+        "label": "كلمة المرور الحالية",
+        "placeholder": "أدخل كلمة المرور الحالية"
+      },
+      "newPassword": {
+        "label": "كلمة المرور الجديدة",
+        "placeholder": "أدخل كلمة المرور الجديدة"
+      },
+      "confirmPassword": {
+        "label": "تأكيد كلمة المرور الجديدة",
+        "placeholder": "أعد إدخال كلمة المرور الجديدة"
+      },
+      "toast": {
+        "success": "تم تحديث كلمة المرور بنجاح"
+      },
+      "validation": {
+        "currentPasswordRequired": "كلمة المرور الحالية مطلوبة",
+        "newPasswordRequired": "كلمة المرور الجديدة مطلوبة",
+        "newPasswordMinLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+        "confirmPasswordRequired": "يرجى تأكيد كلمة المرور الجديدة",
+        "confirmPasswordMismatch": "كلمتا المرور غير متطابقتين"
+      }
     }
   },
   "team": {

@@ -106,6 +106,34 @@
         "message": "Already have an account? ",
         "loginLinkText": "Login"
       }
+    },
+    "forceChangePassword": {
+      "title": "Change Your Password",
+      "description": "This is your first time logging in. Please set a new password to continue.",
+      "submit": "Update Password",
+      "logout": "Log out instead",
+      "currentPassword": {
+        "label": "Current Password",
+        "placeholder": "Enter your current password"
+      },
+      "newPassword": {
+        "label": "New Password",
+        "placeholder": "Enter a new password"
+      },
+      "confirmPassword": {
+        "label": "Confirm New Password",
+        "placeholder": "Re-enter your new password"
+      },
+      "toast": {
+        "success": "Password updated successfully"
+      },
+      "validation": {
+        "currentPasswordRequired": "Current password is required",
+        "newPasswordRequired": "New password is required",
+        "newPasswordMinLength": "Password must be at least 8 characters",
+        "confirmPasswordRequired": "Please confirm your new password",
+        "confirmPasswordMismatch": "Passwords do not match"
+      }
     }
   },
   "team": {

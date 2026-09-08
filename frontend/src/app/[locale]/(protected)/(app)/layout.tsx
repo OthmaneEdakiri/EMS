@@ -8,14 +8,11 @@ export default async function RootAppLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const profileData = await getProfileAction();
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Providers user={profileData?.user ?? null}>
-        <Header />
-        {children}
-      </Providers>
+      <Header />
+      {children}
       <Footer />
     </div>
   );

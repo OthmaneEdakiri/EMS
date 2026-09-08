@@ -15,6 +15,19 @@ Route::get('/', function () {
 Route::prefix('api/v1')->group(function () {
     require __DIR__.'/auth.php';
 
+    Route::middleware('auth:sanctum')->get('/user/me', function (Request $request) {
+        return [
+            'user' => [
+                'id' => $request->user()->id,
+                'name' => $request->user()->name,
+                'email' => $request->user()->email,
+                'role' => $request->user()->role,
+            ],
+            'must_change_password' => $request->user()->must_change_password,
+            'tenant_locale' => $request->user()->tenant->locale,
+        ];
+    });
+
     Route::middleware(['auth:sanctum', 'password.changed'])->get('/user', function (Request $request) {
         return [
             'user' => $request->user(),

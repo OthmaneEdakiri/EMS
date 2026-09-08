@@ -31,7 +31,13 @@ const LoginPage = () => {
       });
       if (result?.status === 200) {
         toast.success(t("toast.success"));
-        router.push("/invoices", { locale: result.tenantLocale });
+        if (result.mustChangePassword) {
+          router.push("/force-change-password", {
+            locale: result.tenantLocale,
+          });
+        } else {
+          router.push("/invoices", { locale: result.tenantLocale });
+        }
       } else if (result?.status === 422) {
         setError(result.message);
         if (result.errors) {
