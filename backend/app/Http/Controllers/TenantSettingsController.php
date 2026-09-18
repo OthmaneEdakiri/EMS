@@ -41,18 +41,15 @@ class TenantSettingsController extends Controller
             };
         }
 
-        if (array_key_exists('logo', $request->input())) {
-            if ($tenant->logo) {
+        unset($validated['logo']);
+        if ($request->hasFile('logo')) {
+            if ($tenant->logo &&  Storage::disk('public')->exists($tenant->logo)) {
                 Storage::disk('public')->delete($tenant->logo);
             }
 
-            if ($request->file('logo')) {
-                $path = $request->file('logo')->store('logos/' . $tenant->id, 'public');
-                $validated['logo'] = $path;
-            } else {
-                $validated['logo'] = null;
-            }
+            $validated['logo'] = $request->file('logo')->store('logos/' . $tenant->id, 'public');
         }
+
 
         $validated['updated_by'] = $request->user()->id;
 

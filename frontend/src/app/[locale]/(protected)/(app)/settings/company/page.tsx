@@ -45,9 +45,7 @@ const CompanySettingsPage = () => {
     if (result && result.status === 200 && result.data) {
       setSettings(result.data);
       if (result.data.logo) {
-        const BACKEND_URL =
-          process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
-        setLogoPreview(`${BACKEND_URL}/storage/${result.data.logo}`);
+        setLogoPreview(result.data.logo);
       } else {
         setLogoPreview(null);
       }
