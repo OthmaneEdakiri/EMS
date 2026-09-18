@@ -16,6 +16,9 @@ class Product extends Model
         'name',
         'unit_price',
         'tax_rate',
+        'track_stock',
+        'quantity_on_hand',
+        'reorder_level',
         'created_by',
         'updated_by',
     ];
@@ -23,6 +26,9 @@ class Product extends Model
     protected $casts = [
         'unit_price' => 'integer',
         'tax_rate' => 'decimal:2',
+        'track_stock' => 'boolean',
+        'quantity_on_hand' => 'integer',
+        'reorder_level' => 'integer',
         'archived_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
@@ -35,6 +41,11 @@ class Product extends Model
     public function invoiceLines(): HasMany
     {
         return $this->hasMany(InvoiceLine::class);
+    }
+
+    public function stockMovements(): HasMany
+    {
+        return $this->hasMany(StockMovement::class);
     }
 
     public function createdBy(): BelongsTo

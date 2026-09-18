@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name', 'logo', 'currency', 'currency_decimal_places', 'locale', 'invoice_prefix', 'updated_by'])]
+#[Fillable(['name', 'logo', 'currency', 'currency_decimal_places', 'locale', 'invoice_prefix', 'oversell_policy', 'updated_by'])]
 class Tenant extends Model
 {
     use HasFactory;
@@ -41,5 +41,10 @@ class Tenant extends Model
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function stockMovements(): HasMany
+    {
+        return $this->hasMany(StockMovement::class);
     }
 }
