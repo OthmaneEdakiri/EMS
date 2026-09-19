@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdjustStockRequest;
 use App\Http\Requests\EnableStockTrackingRequest;
 use App\Models\Product;
 use App\Models\StockMovement;
@@ -132,6 +133,39 @@ class ProductController extends Controller
                 'track_stock' => true,
                 'quantity_on_hand' => $openingQuantity,
                 'reorder_level' => $reorderLevel,
+                'updated_by' => $request->user()->id,
+            ]);
+        });
+
+        return $this->success($product->fresh());
+    }
+
+    public function adjustStock(AdjustStockRequest $request, Product $product)
+    {
+        if ($product->tenant_id !== $request->user()->tenant_id) {
+            abort(403);
+        }
+
+        if (! $product->track_stock) {
+            return $this->error(['Stock tracking is not enabled for this product.'], status: 422);
+        }
+
+        $quantityDelta = $request->has('new_quantity')
+            ? $request->integer('new_quantity') - $product->quantity_on_hand
+            : $request->integer('delta');
+
+        DB::transaction(function () use ($request, $product, $quantityDelta) {
+            StockMovement::create([
+                'tenant_id' => $product->tenant_id,
+                'product_id' => $product->id,
+                'type' => StockMovement::TYPE_ADJUSTMENT,
+                'quantity_delta' => $quantityDelta,
+                'reason' => $request->string('reason'),
+                'created_by' => $request->user()->id,
+            ]);
+
+            $product->update([
+                'quantity_on_hand' => $product->quantity_on_hand + $quantityDelta,
                 'updated_by' => $request->user()->id,
             ]);
         });
