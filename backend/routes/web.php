@@ -54,6 +54,8 @@ Route::prefix('api/v1')->group(function () {
         Route::get('/products/{product}', [ProductController::class, 'show']);
         Route::patch('/products/{product}', [ProductController::class, 'update']);
         Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+        Route::patch('/products/{product}/stock/enable', [ProductController::class, 'enableStockTracking'])
+            ->middleware('can:manage-company-settings');
     });
 
     Route::middleware(['auth:sanctum', 'password.changed'])->group(function () {

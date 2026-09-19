@@ -11,8 +11,11 @@ class StockMovement extends Model
     use HasFactory;
 
     public const TYPE_OPENING_BALANCE = 'opening_balance';
+
     public const TYPE_SALE = 'sale';
+
     public const TYPE_CANCELLATION_REVERSAL = 'cancellation_reversal';
+
     public const TYPE_ADJUSTMENT = 'adjustment';
 
     public const REFERENCE_TYPE_INVOICE = 'invoice';

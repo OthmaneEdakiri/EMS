@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EnableStockTrackingRequest;
 use App\Models\Product;
+use App\Models\StockMovement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -15,7 +18,7 @@ class ProductController extends Controller
             ->whereNull('archived_at')
             ->whereNull('deleted_at')
             ->when($request->input('search'), function ($query, $search) {
-                $term = '%' . trim($search) . '%';
+                $term = '%'.trim($search).'%';
                 $query->where('name', 'ilike', $term);
             })
             ->orderByDesc('id')
@@ -96,5 +99,43 @@ class ProductController extends Controller
         $product->delete();
 
         return response()->noContent();
+    }
+
+    public function enableStockTracking(EnableStockTrackingRequest $request, Product $product)
+    {
+        if ($product->tenant_id !== $request->user()->tenant_id) {
+            abort(403);
+        }
+
+        if ($product->type !== 'product') {
+            return $this->error(['Only product-type items can have stock tracking enabled.'], status: 422);
+        }
+
+        if ($product->track_stock) {
+            return $this->error(['Stock tracking is already enabled for this product.'], status: 422);
+        }
+
+        $openingQuantity = $request->integer('opening_quantity');
+        $reorderLevel = $request->has('reorder_level') ? $request->integer('reorder_level') : null;
+
+        DB::transaction(function () use ($request, $product, $openingQuantity, $reorderLevel) {
+            StockMovement::create([
+                'tenant_id' => $product->tenant_id,
+                'product_id' => $product->id,
+                'type' => StockMovement::TYPE_OPENING_BALANCE,
+                'quantity_delta' => $openingQuantity,
+                'reason' => null,
+                'created_by' => $request->user()->id,
+            ]);
+
+            $product->update([
+                'track_stock' => true,
+                'quantity_on_hand' => $openingQuantity,
+                'reorder_level' => $reorderLevel,
+                'updated_by' => $request->user()->id,
+            ]);
+        });
+
+        return $this->success($product->fresh());
     }
 }
