@@ -17,7 +17,8 @@ class TenantSettingsController extends Controller
             'currency_decimal_places' => $tenant->currency_decimal_places,
             'locale' => $tenant->locale,
             'invoice_prefix' => $tenant->invoice_prefix,
-            'logo' => $tenant->logo ? asset('storage/' . $tenant->logo) : null,
+            'logo' => $tenant->logo ? asset('storage/'.$tenant->logo) : null,
+            'oversell_policy' => $tenant->oversell_policy,
             'has_invoices' => $tenant->invoices()->exists(),
         ]);
     }
@@ -31,6 +32,7 @@ class TenantSettingsController extends Controller
             'currency' => ['sometimes', 'string', 'size:3'],
             'locale' => ['sometimes', 'string', 'in:ar,en'],
             'invoice_prefix' => ['sometimes', 'string', 'max:20'],
+            'oversell_policy' => ['sometimes', 'string', 'in:block,warn'],
             'logo' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp', 'max:2048', 'dimensions:max_width=400,max_height=400'],
         ]);
 
@@ -43,13 +45,12 @@ class TenantSettingsController extends Controller
 
         unset($validated['logo']);
         if ($request->hasFile('logo')) {
-            if ($tenant->logo &&  Storage::disk('public')->exists($tenant->logo)) {
+            if ($tenant->logo && Storage::disk('public')->exists($tenant->logo)) {
                 Storage::disk('public')->delete($tenant->logo);
             }
 
-            $validated['logo'] = $request->file('logo')->store('logos/' . $tenant->id, 'public');
+            $validated['logo'] = $request->file('logo')->store('logos/'.$tenant->id, 'public');
         }
-
 
         $validated['updated_by'] = $request->user()->id;
 
@@ -61,7 +62,8 @@ class TenantSettingsController extends Controller
             'currency_decimal_places' => $tenant->currency_decimal_places,
             'locale' => $tenant->locale,
             'invoice_prefix' => $tenant->invoice_prefix,
-            'logo' => $tenant->logo ? asset('storage/' . $tenant->logo) : null,
+            'logo' => $tenant->logo ? asset('storage/'.$tenant->logo) : null,
+            'oversell_policy' => $tenant->oversell_policy,
             'has_invoices' => $tenant->invoices()->exists(),
         ]);
     }

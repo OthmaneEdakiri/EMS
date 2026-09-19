@@ -17,6 +17,7 @@ class TenantFactory extends Factory
             'currency_decimal_places' => 2,
             'locale' => 'en',
             'invoice_prefix' => 'INV',
+            'oversell_policy' => 'block',
         ];
     }
 }

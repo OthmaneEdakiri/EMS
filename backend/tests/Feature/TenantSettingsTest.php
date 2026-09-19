@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Invoice;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -38,7 +37,7 @@ class TenantSettingsTest extends TestCase
         $token = $this->owner->createToken('api')->plainTextToken;
 
         return [
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer '.$token,
             'Accept' => 'application/json',
         ];
     }
@@ -48,7 +47,7 @@ class TenantSettingsTest extends TestCase
         $token = $this->staff->createToken('api')->plainTextToken;
 
         return [
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer '.$token,
             'Accept' => 'application/json',
         ];
     }
@@ -95,7 +94,19 @@ class TenantSettingsTest extends TestCase
     {
         $response = $this->getJson('/api/v1/settings/company', $this->staffHeaders());
 
-        $response->assertStatus(403);
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'name',
+                'currency',
+                'currency_decimal_places',
+                'locale',
+                'invoice_prefix',
+                'logo',
+                'oversell_policy',
+                'has_invoices',
+            ],
+        ]);
     }
 
     public function test_staff_cannot_update_company_settings(): void
@@ -210,5 +221,92 @@ class TenantSettingsTest extends TestCase
         $this->assertEquals('Partially Updated', $this->tenant->name);
         $this->assertEquals($originalCurrency, $this->tenant->currency);
         $this->assertEquals($originalPrefix, $this->tenant->invoice_prefix);
+    }
+
+    // === Oversell Policy Tests (FR-16) ===
+
+    public function test_owner_can_get_settings_with_oversell_policy(): void
+    {
+        $response = $this->getJson('/api/v1/settings/company', $this->ownerHeaders());
+
+        $response->assertStatus(200);
+        $response->assertJsonPath('data.oversell_policy', 'block');
+    }
+
+    public function test_owner_can_update_oversell_policy_to_warn(): void
+    {
+        $response = $this->patchJson('/api/v1/settings/company', [
+            'oversell_policy' => 'warn',
+        ], $this->ownerHeaders());
+
+        $response->assertStatus(200);
+        $response->assertJsonPath('data.oversell_policy', 'warn');
+
+        $this->tenant->refresh();
+        $this->assertEquals('warn', $this->tenant->oversell_policy);
+    }
+
+    public function test_owner_can_update_oversell_policy_to_block(): void
+    {
+        $this->tenant->update(['oversell_policy' => 'warn']);
+
+        $response = $this->patchJson('/api/v1/settings/company', [
+            'oversell_policy' => 'block',
+        ], $this->ownerHeaders());
+
+        $response->assertStatus(200);
+        $response->assertJsonPath('data.oversell_policy', 'block');
+
+        $this->tenant->refresh();
+        $this->assertEquals('block', $this->tenant->oversell_policy);
+    }
+
+    public function test_staff_can_read_oversell_policy(): void
+    {
+        $response = $this->getJson('/api/v1/settings/company', $this->staffHeaders());
+
+        $response->assertStatus(200);
+        $response->assertJsonPath('data.oversell_policy', 'block');
+    }
+
+    public function test_staff_cannot_update_oversell_policy(): void
+    {
+        $response = $this->patchJson('/api/v1/settings/company', [
+            'oversell_policy' => 'warn',
+        ], $this->staffHeaders());
+
+        $response->assertStatus(403);
+
+        $this->tenant->refresh();
+        $this->assertEquals('block', $this->tenant->oversell_policy);
+    }
+
+    public function test_validates_oversell_policy_enum(): void
+    {
+        $response = $this->patchJson('/api/v1/settings/company', [
+            'oversell_policy' => 'invalid',
+        ], $this->ownerHeaders());
+
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors('oversell_policy');
+    }
+
+    public function test_new_tenant_defaults_to_block(): void
+    {
+        $tenant = Tenant::factory()->create();
+
+        $this->assertEquals('block', $tenant->oversell_policy);
+    }
+
+    public function test_oversell_policy_persists_with_other_settings(): void
+    {
+        $this->patchJson('/api/v1/settings/company', [
+            'oversell_policy' => 'warn',
+            'name' => 'Updated Name',
+        ], $this->ownerHeaders())->assertStatus(200);
+
+        $this->tenant->refresh();
+        $this->assertEquals('warn', $this->tenant->oversell_policy);
+        $this->assertEquals('Updated Name', $this->tenant->name);
     }
 }

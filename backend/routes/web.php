@@ -72,8 +72,11 @@ Route::prefix('api/v1')->group(function () {
         Route::post('/invoices/{invoice}/payments', [InvoiceController::class, 'storePayment']);
     });
 
-    Route::middleware(['auth:sanctum', 'password.changed', 'can:manage-company-settings'])->group(function () {
+    Route::middleware(['auth:sanctum', 'password.changed'])->group(function () {
         Route::get('/settings/company', [TenantSettingsController::class, 'show']);
+    });
+
+    Route::middleware(['auth:sanctum', 'password.changed', 'can:manage-company-settings'])->group(function () {
         Route::patch('/settings/company', [TenantSettingsController::class, 'update']);
     });
 
