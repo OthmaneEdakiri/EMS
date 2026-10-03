@@ -9,6 +9,7 @@ import {
   createProductAction,
   updateProductAction,
   deleteProductAction,
+  enableStockTrackingAction,
 } from "@/actions/products";
 
 import { type Product } from "./types";
@@ -87,9 +88,23 @@ const ProductsPage = () => {
     setServerErrors(undefined);
     
     try {
-      const result = await createProductAction(values);
+      const { track_stock, opening_quantity, reorder_level, ...productValues } = values;
+      const result = await createProductAction(productValues);
       if (result?.status === 201 && result.data) {
-        toast.success(t("toast.createSuccess"));
+        if (track_stock === "true" || track_stock === true) {
+          const stockResult = await enableStockTrackingAction(result.data.id, {
+            opening_quantity: Number(opening_quantity) || 0,
+            reorder_level: reorder_level ? Number(reorder_level) : null,
+          });
+          if (stockResult?.status !== 200) {
+            toast.success(t("toast.createSuccess"));
+            toast.error(stockResult?.message || t("toast.stockEnabled"));
+          } else {
+            toast.success(t("toast.stockEnabled"));
+          }
+        } else {
+          toast.success(t("toast.createSuccess"));
+        }
         setShowForm(false);
         fetchProducts(
           pagination.pageIndex + 1,
@@ -111,9 +126,25 @@ const ProductsPage = () => {
     setCreating(true);
     setServerErrors(undefined);
     try {
-      const result = await updateProductAction(editingProduct.id, values);
+      const { track_stock, opening_quantity, reorder_level, ...productValues } = values;
+      const result = await updateProductAction(editingProduct.id, productValues);
       if (result?.status === 200 && result.data) {
-        toast.success(t("toast.updateSuccess"));
+        if (
+          (track_stock === "true" || track_stock === true) &&
+          !editingProduct.track_stock
+        ) {
+          const stockResult = await enableStockTrackingAction(editingProduct.id, {
+            opening_quantity: Number(opening_quantity) || 0,
+            reorder_level: reorder_level ? Number(reorder_level) : null,
+          });
+          if (stockResult?.status === 200) {
+            toast.success(t("toast.stockEnabled"));
+          } else {
+            toast.error(stockResult?.message || t("toast.error"));
+          }
+        } else {
+          toast.success(t("toast.updateSuccess"));
+        }
         setEditingProduct(null);
         fetchProducts(
           pagination.pageIndex + 1,
@@ -217,6 +248,9 @@ const ProductsPage = () => {
                   type: editingProduct.type,
                   unit_price: editingProduct.unit_price,
                   tax_rate: editingProduct.tax_rate,
+                  track_stock: editingProduct.track_stock,
+                  quantity_on_hand: editingProduct.quantity_on_hand,
+                  reorder_level: editingProduct.reorder_level,
                 }}
                 submitButtonLabel={t("updateProduct")}
               />
@@ -235,6 +269,13 @@ const ProductsPage = () => {
               setShowForm(false);
               setServerErrors(undefined);
             }}
+            onRefresh={() =>
+              fetchProducts(
+                pagination.pageIndex + 1,
+                pagination.pageSize,
+                debouncedSearch || undefined,
+              )
+            }
             onPaginationChange={(updater) => {
               setPagination((prev) => {
                 const next =

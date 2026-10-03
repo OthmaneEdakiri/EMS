@@ -316,6 +316,8 @@
       "createSuccess": "Product created successfully",
       "updateSuccess": "Product updated successfully",
       "deleteSuccess": "Product deleted successfully",
+      "stockEnabled": "Stock tracking enabled successfully",
+      "stockAdjusted": "Stock adjusted successfully",
       "error": "Something went wrong"
     },
     "validation": {
@@ -325,7 +327,48 @@
       "typeInvalid": "Please select a valid type",
       "unitPriceRequired": "Unit price is required",
       "unitPriceInvalid": "Please enter a valid price",
-      "taxRateInvalid": "Tax rate must be between 0 and 100"
+      "taxRateInvalid": "Tax rate must be between 0 and 100",
+      "openingQuantityRequired": "Opening quantity is required",
+      "openingQuantityInvalid": "Please enter a valid quantity",
+      "reorderLevelInvalid": "Reorder level must be 0 or greater",
+      "adjustmentModeRequired": "Please select an adjustment mode",
+      "newQuantityInvalid": "Please enter a valid quantity",
+      "deltaInvalid": "Please enter a valid delta value",
+      "reasonRequired": "Reason is required"
+    },
+    "stock": {
+      "trackStock": "Track Stock",
+      "trackStockDescription": "Enable inventory tracking for this product",
+      "openingQuantity": "Opening Quantity",
+      "openingQuantityPlaceholder": "0",
+      "openingQuantityHelp": "The current count of this product in stock",
+      "reorderLevel": "Reorder Level",
+      "reorderLevelPlaceholder": "0",
+      "reorderLevelHelp": "Show a low-stock alert when quantity falls to this level",
+      "quantityOnHand": "Stock",
+      "lowStock": "Low Stock",
+      "notTracked": "Not tracked",
+      "adjustStock": "Adjust Stock",
+      "adjustment": {
+        "title": "Adjust Stock",
+        "description": "Update the stock quantity for {name}",
+        "currentStock": "Current Stock",
+        "mode": "Adjustment Type",
+        "modes": {
+          "newQuantity": "Set New Quantity",
+          "delta": "Add / Subtract"
+        },
+        "newQuantityLabel": "New Quantity",
+        "newQuantityPlaceholder": "Enter new quantity",
+        "deltaLabel": "Quantity Change",
+        "deltaPlaceholder": "e.g. +10 or -5",
+        "reasonLabel": "Reason",
+        "reasonPlaceholder": "e.g. Physical count, Damaged, Received shipment",
+        "confirmReduce": "Are you sure you want to reduce the stock? This action will decrease the quantity.",
+        "cancel": "Cancel",
+        "submit": "Save Adjustment",
+        "submitting": "Saving..."
+      }
     },
     "pagination": {
       "page": "Page",
@@ -486,11 +529,20 @@
       "confirm": "Yes, Change Prefix",
       "cancel": "Cancel"
     },
+    "oversellPolicy": {
+      "title": "Oversell Policy",
+      "description": "Control what happens when a sale exceeds available stock",
+      "block": "Block sales that exceed stock",
+      "blockDescription": "Prevent invoices from being sent when products are out of stock",
+      "warn": "Allow, but show a warning",
+      "warnDescription": "Allow overselling and display a warning badge on the invoice"
+    },
     "toast": {
       "updateSuccess": "Company settings updated successfully",
       "logoUpdated": "Logo updated successfully",
       "logoRemoved": "Logo removed successfully",
       "logoTooLarge": "Logo must be less than 2MB",
+      "oversellUpdated": "Oversell policy updated successfully",
       "error": "Something went wrong"
     },
     "validation": {

@@ -106,6 +106,95 @@ export const updateProductAction = async (
   }
 };
 
+export const enableStockTrackingAction = async (
+  productId: number,
+  values: {
+    opening_quantity?: number;
+    reorder_level?: number | null;
+  },
+) => {
+  try {
+    const token = (await cookies()).get("access_token")?.value;
+    const axiosServer = await createAxiosServer(token);
+    const response = await axiosServer.patch(
+      `/products/${productId}/stock/enable`,
+      values,
+    );
+    if (response.status === 200) {
+      return {
+        status: 200,
+        data: response.data.data,
+      };
+    }
+    return {
+      status: response.status,
+      message: "An unexpected response was received.",
+    };
+  } catch (error: any) {
+    const status = error.response?.status || 500;
+    const data = error.response?.data;
+    if (status === 422) {
+      return {
+        status,
+        message: data?.message || "Validation failed.",
+        errors: data?.errors || {},
+      };
+    }
+    return {
+      status,
+      message:
+        data?.message ||
+        error.message ||
+        "An unexpected server error occurred.",
+    };
+  }
+};
+
+export const adjustStockAction = async (
+  productId: number,
+  values: {
+    new_quantity?: number;
+    delta?: number;
+    reason: string;
+  },
+) => {
+  try {
+    const token = (await cookies()).get("access_token")?.value;
+    const axiosServer = await createAxiosServer(token);
+    const response = await axiosServer.post(
+      `/products/${productId}/stock/adjustments`,
+      values,
+    );
+    if (response.status === 201) {
+      return {
+        status: 201,
+        data: response.data.data,
+      };
+    }
+    return {
+      status: response.status,
+      message: "An unexpected response was received.",
+    };
+  } catch (error: any) {
+    const status = error.response?.status || 500;
+    const data = error.response?.data;
+    if (status === 422) {
+      return {
+        status,
+        message: data?.message || "Validation failed.",
+        errors: data?.errors || {},
+      };
+    }
+    return {
+      status,
+      message:
+        data?.message ||
+        error.message ||
+        "An unexpected server error occurred.",
+    };
+  }
+};
+
 export const deleteProductAction = async (productId: number) => {
   try {
     const token = (await cookies()).get("access_token")?.value;

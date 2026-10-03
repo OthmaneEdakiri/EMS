@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl";
 import { Pencil } from "lucide-react";
 import { type Product } from "../types";
 import { ProductDeleteDialog } from "./product-delete-dialog";
+import { StockAdjustmentDialog } from "./stock-adjustment-dialog";
 import { ProductsEmptyState } from "./products-empty-state";
 import { ProductsPagination } from "./products-pagination";
 import {
@@ -22,6 +23,7 @@ import {
 } from "@/components/ui/table";
 import { Loader } from "@/components/ui/loader";
 import { Button } from "@/components/ui/button";
+import { useUserContext } from "@/contexts/user-context";
 
 interface ProductsTableProps {
   products: Product[];
@@ -38,6 +40,7 @@ interface ProductsTableProps {
   onPaginationChange: (
     updater: { pageIndex: number; pageSize: number } | ((old: { pageIndex: number; pageSize: number }) => { pageIndex: number; pageSize: number }),
   ) => void;
+  onRefresh: () => void;
 }
 
 export const ProductsTable = ({
@@ -49,8 +52,11 @@ export const ProductsTable = ({
   onDelete,
   onEdit,
   onPaginationChange,
+  onRefresh,
 }: ProductsTableProps) => {
   const t = useTranslations("products");
+  const { user } = useUserContext();
+  const isOwner = user?.role === "owner";
 
   const columns: LegacyColumnDef<Product, any>[] = [
     {
@@ -82,14 +88,47 @@ export const ProductsTable = ({
       cell: ({ row }) => {
         return row.original.tax_rate != null
           ? `${row.original.tax_rate}%`
-          : "—";
+          : "\u2014";
       },
     },
+    ...(isOwner
+      ? [
+          {
+            accessorKey: "quantity_on_hand" as const,
+            header: t("stock.quantityOnHand"),
+            cell: ({ row }: { row: { original: Product } }) => {
+              const p = row.original;
+              if (!p.track_stock) {
+                return (
+                  <span className="text-muted-foreground text-xs">
+                    {t("stock.notTracked")}
+                  </span>
+                );
+              }
+              const isLow =
+                p.reorder_level != null &&
+                p.quantity_on_hand <= p.reorder_level;
+              return (
+                <div className="flex items-center gap-2">
+                  <span className={isLow ? "font-semibold text-amber-600" : ""}>
+                    {p.quantity_on_hand}
+                  </span>
+                  {isLow && (
+                    <span className="inline-flex items-center rounded-md bg-amber-100 px-1.5 py-0.5 text-xs font-medium text-amber-700">
+                      {t("stock.lowStock")}
+                    </span>
+                  )}
+                </div>
+              );
+            },
+          } as LegacyColumnDef<Product, any>,
+        ]
+      : []),
     {
       accessorKey: "created_at",
       header: t("columns.createdAt"),
       cell: ({ row }) => {
-        if (!row.original.created_at) return "—";
+        if (!row.original.created_at) return "\u2014";
         return new Date(row.original.created_at).toLocaleDateString();
       },
     },
@@ -107,6 +146,9 @@ export const ProductsTable = ({
             >
               <Pencil className="size-3" />
             </Button>
+            {isOwner && p.track_stock && (
+              <StockAdjustmentDialog product={p} onAdjusted={onRefresh} />
+            )}
             <ProductDeleteDialog
               productName={p.name}
               disabled={deletingId === p.id}

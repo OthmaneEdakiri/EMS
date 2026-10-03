@@ -8,6 +8,7 @@ import { type CompanySettings } from "../types";
 import { CompanyInfoCard } from "./company-info-card";
 import { CompanyLogoCard } from "./company-logo-card";
 import { CompanyCurrencyCard } from "./company-currency-card";
+import { CompanyOversellPolicyCard } from "./company-oversell-policy-card";
 
 interface CompanySettingsFormProps {
   settings: CompanySettings;
@@ -45,6 +46,11 @@ export const CompanySettingsForm = ({
         currency={settings.currency}
         locale={settings.locale}
         hasInvoices={settings.has_invoices}
+      />
+
+      <CompanyOversellPolicyCard
+        oversellPolicy={settings.oversell_policy ?? "block"}
+        disabled={false}
       />
 
       <div className="flex justify-end">

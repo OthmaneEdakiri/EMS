@@ -491,4 +491,56 @@ class StockTrackingTest extends TestCase
         $product->refresh();
         $this->assertEquals(-3, $product->quantity_on_hand);
     }
+
+    // === Data Integrity Test (PRD §17) ===
+
+    public function test_quantity_on_hand_matches_movements_sum_after_enable(): void
+    {
+        $product = Product::factory()->create([
+            'tenant_id' => $this->tenant->id,
+            'type' => 'product',
+            'track_stock' => false,
+            'quantity_on_hand' => 0,
+        ]);
+
+        $this->patchJson("/api/v1/products/{$product->id}/stock/enable", [
+            'opening_quantity' => 30,
+        ], $this->ownerHeaders());
+
+        $product->refresh();
+        $movementSum = StockMovement::where('product_id', $product->id)->sum('quantity_delta');
+
+        $this->assertEquals($movementSum, $product->quantity_on_hand);
+    }
+
+    public function test_quantity_on_hand_matches_movements_sum_after_multiple_adjustments(): void
+    {
+        $product = Product::factory()->create([
+            'tenant_id' => $this->tenant->id,
+            'type' => 'product',
+            'track_stock' => true,
+            'quantity_on_hand' => 0,
+        ]);
+
+        $this->postJson("/api/v1/products/{$product->id}/stock/adjustments", [
+            'delta' => 50,
+            'reason' => 'Opening stock',
+        ], $this->ownerHeaders());
+
+        $this->postJson("/api/v1/products/{$product->id}/stock/adjustments", [
+            'delta' => -10,
+            'reason' => 'Damaged',
+        ], $this->ownerHeaders());
+
+        $this->postJson("/api/v1/products/{$product->id}/stock/adjustments", [
+            'new_quantity' => 20,
+            'reason' => 'Physical count',
+        ], $this->ownerHeaders());
+
+        $product->refresh();
+        $movementSum = StockMovement::where('product_id', $product->id)->sum('quantity_delta');
+
+        $this->assertEquals($movementSum, $product->quantity_on_hand);
+        $this->assertEquals(20, $product->quantity_on_hand);
+    }
 }

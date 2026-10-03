@@ -1,58 +1,65 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# EMS Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+ERP SaaS Platform for SMBs — Laravel API
 
-## About Laravel
+## Tech Stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Framework:** Laravel 11
+- **Database:** PostgreSQL
+- **Auth:** Laravel Sanctum
+- **Testing:** PHPUnit
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Getting Started
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Running Tests
 
-## Contributing
+```bash
+php artisan test
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Code style:
 
-## Code of Conduct
+```bash
+vendor/bin/pint
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## API
 
-## Security Vulnerabilities
+All endpoints are prefixed with `/api/v1/` and require a Sanctum bearer token.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Sprint 6 — Inventory & Stock Management (v2)
 
-## License
+### New Endpoints
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Method | Endpoint | Purpose | Access |
+|---|---|---|---|
+| PATCH | `/api/v1/products/{id}/stock/enable` | Enable stock tracking + set opening quantity | Owner only |
+| POST | `/api/v1/products/{id}/stock/adjustments` | Manual stock adjustment (new quantity or delta) | Owner only |
+| GET | `/api/v1/settings/company` | Read tenant settings (incl. oversell_policy) | All authenticated users |
+| PATCH | `/api/v1/settings/company` | Update tenant settings (incl. oversell_policy) | Owner only |
+
+### Known Limitations (Sprint 6)
+
+These are documented per PRD v2 §17:
+
+1. **`quantity_on_hand` is a cached value.** If it ever drifts from the sum of `stock_movements` (e.g., due to a bug or manual DB edit), there is only a manual "recalculate" action, not automatic reconciliation. A test asserts the cached value always matches the ledger sum after each operation.
+
+2. **Whole-number quantities only.** No fractional units (kg, liters). Flag before onboarding any pilot tenant that sells by weight/volume.
+
+3. **No stock reservation on draft invoices.** Two staff can draft against the same last unit; only the first to *send* wins (by design). This can surprise a user who drafted first and sends second.
+
+4. **Manual adjustments have no approval workflow.** Any Owner can adjust stock to any value with just a free-text reason. Acceptable at pilot scale; revisit if a tenant has multiple Owners.
+
+5. **No low-stock notifications.** Badge is visible only when a user is actively looking at the product or stock list.
+
+6. **Single implicit location per tenant.** No support for "stock at Warehouse A vs Store B."
+
+7. **Oversell policy is tenant-wide only.** A tenant that wants "block for high-value items, warn for the rest" has no way to express that in v2.

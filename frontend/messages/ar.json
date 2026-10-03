@@ -316,6 +316,8 @@
       "createSuccess": "تم إنشاء المنتج بنجاح",
       "updateSuccess": "تم تحديث المنتج بنجاح",
       "deleteSuccess": "تم حذف المنتج بنجاح",
+      "stockEnabled": "تم تفعيل تتبع المخزون بنجاح",
+      "stockAdjusted": "تم تعديل المخزون بنجاح",
       "error": "حدث خطأ ما"
     },
     "validation": {
@@ -325,7 +327,48 @@
       "typeInvalid": "يرجى اختيار نوع صالح",
       "unitPriceRequired": "سعر الوحدة مطلوب",
       "unitPriceInvalid": "يرجى إدخال سعر صالح",
-      "taxRateInvalid": "يجب أن تكون نسبة الضريبة بين 0 و 100"
+      "taxRateInvalid": "يجب أن تكون نسبة الضريبة بين 0 و 100",
+      "openingQuantityRequired": "الكمية الأولية مطلوبة",
+      "openingQuantityInvalid": "يرجى إدخال كمية صالحة",
+      "reorderLevelInvalid": "يجب أن يكون مستوى إعادة الطلب 0 أو أكثر",
+      "adjustmentModeRequired": "يرجى اختيار نوع التعديل",
+      "newQuantityInvalid": "يرجى إدخال كمية صالحة",
+      "deltaInvalid": "يرجى إدخال قيمة تغيير صالحة",
+      "reasonRequired": "السبب مطلوب"
+    },
+    "stock": {
+      "trackStock": "تتبع المخزون",
+      "trackStockDescription": "تفعيل تتبع المخزون لهذا المنتج",
+      "openingQuantity": "الكمية الأولية",
+      "openingQuantityPlaceholder": "0",
+      "openingQuantityHelp": "العدد الحالي لهذا المنتج في المخزون",
+      "reorderLevel": "مستوى إعادة الطلب",
+      "reorderLevelPlaceholder": "0",
+      "reorderLevelHelp": "عرض تنبيه عند انخفاض الكمية إلى هذا المستوى",
+      "quantityOnHand": "المخزون",
+      "lowStock": "مخزون منخفض",
+      "notTracked": "غير مُتتبع",
+      "adjustStock": "تعديل المخزون",
+      "adjustment": {
+        "title": "تعديل المخزون",
+        "description": "تحديث كمية المخزون للمنتج {name}",
+        "currentStock": "المخزون الحالي",
+        "mode": "نوع التعديل",
+        "modes": {
+          "newQuantity": "تعيين كمية جديدة",
+          "delta": "إضافة / طرح"
+        },
+        "newQuantityLabel": "الكمية الجديدة",
+        "newQuantityPlaceholder": "أدخل الكمية الجديدة",
+        "deltaLabel": "قيمة التغيير",
+        "deltaPlaceholder": "مثال: +10 أو -5",
+        "reasonLabel": "السبب",
+        "reasonPlaceholder": "مثال: جرد فعلي، تالف، استلام شحنة",
+        "confirmReduce": "هل أنت متأكد أنك تريد تقليل المخزون؟ سيؤدي هذا الإجراء إلى خفض الكمية.",
+        "cancel": "إلغاء",
+        "submit": "حفظ التعديل",
+        "submitting": "جارٍ الحفظ..."
+      }
     },
     "pagination": {
       "page": "صفحة",
@@ -486,11 +529,20 @@
       "confirm": "نعم، تغيير البادئة",
       "cancel": "إلغاء"
     },
+    "oversellPolicy": {
+      "title": "سياسة البيع زائد",
+      "description": "التحكم فيما يحدث عندما تتجاوز المبيعات المخزون المتاح",
+      "block": "منع المبيعات التي تتجاوز المخزون",
+      "blockDescription": "منع إرسال الفواتير عندما تكون المنتجات نفد من المخزون",
+      "warn": "السماح مع عرض تحذير",
+      "warnDescription": "السماح بالبيع زائد وعرض شارة تحذير على الفاتورة"
+    },
     "toast": {
       "updateSuccess": "تم تحديث إعدادات الشركة بنجاح",
       "logoUpdated": "تم تحديث الشعار بنجاح",
       "logoRemoved": "تم إزالة الشعار بنجاح",
       "logoTooLarge": "يجب أن يكون الشعار أقل من 2 ميجابايت",
+      "oversellUpdated": "تم تحديث سياسة البيع زائد بنجاح",
       "error": "حدث خطأ ما"
     },
     "validation": {

@@ -6,4 +6,5 @@ export interface CompanySettings {
   locale: string;
   invoice_prefix: string;
   has_invoices: boolean;
+  oversell_policy: string;
 }
