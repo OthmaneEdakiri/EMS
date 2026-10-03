@@ -68,7 +68,7 @@ export const AddProductForm = ({
   };
 
   return (
-    <Form ref={formRef} onFormSubmit={onSubmit} className="flex flex-col gap-4">
+    <Form ref={formRef} onFormSubmit={(values)=> onSubmit({ ...values, track_stock: trackStock })} className="flex flex-col gap-4">
       <Field.Root
         name="name"
         validate={(value) => {
