@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import {
@@ -80,6 +80,8 @@ export const StockAdjustmentDialog = ({
     setReason("");
     setMode("new_quantity");
   };
+
+  useEffect(()=>{console.log(delta)},[delta])
 
   return (
     <AlertDialog open={open} onOpenChange={(o) => (o ? setOpen(true) : handleClose())}>

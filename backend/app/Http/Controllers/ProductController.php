@@ -170,6 +170,6 @@ class ProductController extends Controller
             ]);
         });
 
-        return $this->success($product->fresh());
+        return $this->success($product->fresh(), status: 201);
     }
 }
