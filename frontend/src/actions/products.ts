@@ -165,6 +165,7 @@ export const adjustStockAction = async (
       `/products/${productId}/stock/adjustments`,
       values,
     );
+    console.log("from adjustStockAction", response)
     if (response.status === 201) {
       return {
         status: 201,
