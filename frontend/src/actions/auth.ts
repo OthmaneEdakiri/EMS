@@ -78,7 +78,6 @@ export const signupAction = async (values: Record<string, string>) => {
     const token = (await cookies()).get("access_token")?.value;
     const axiosServer = await createAxiosServer(token);
     const response = await axiosServer.post("/register", values);
-    console.log("Signup response:", response.data); // Log the entire response data for debugging
     if (response.status === 201) {
       return {
         status: 201,

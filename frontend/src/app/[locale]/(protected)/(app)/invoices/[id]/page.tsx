@@ -101,7 +101,6 @@ const InvoiceDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
     if (!invoice) return;
     setActionLoading("pdf");
     const result = await downloadPdfAction(invoice.id);
-    console.log("result from handleDownloadPdf", result)
     if (result.status === 200 && result.data) {
       const byteCharacters = atob(result.data);
       const byteNumbers = new Array(byteCharacters.length);

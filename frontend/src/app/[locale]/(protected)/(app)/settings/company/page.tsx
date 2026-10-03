@@ -116,6 +116,7 @@ const CompanySettingsPage = () => {
   };
 
   const handleSubmit = async (values: Record<string, string>) => {
+    console.log("from handleSubmit", values)
     if (!settings || !originalValues) return;
 
     const currencyChanged = values.currency !== originalValues.currency;
